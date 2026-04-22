@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(uuid())
+  name           String
+  email          String    @unique
+  passwordHash   String
+  role           String    @default("CLIENT") // CLIENT, MARKETER, ADMIN
+  walletBalance  Float     @default(0)
+  
+  // Marketer specific fields
+  rating         Float     @default(0)
+  startingPrice  Float     @default(0)
+  specialties    String    @default("") // e.g. "SEO,Social Media"
+  bio            String    @default("")
+  profileImage   String?
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // Relations
+  tasksPosted    Task[]    @relation("ClientTasks")
+  proposals      Proposal[]
+  feedPosts      FeedPost[]
+  conversations  Conversation[] @relation("UserConversations")
+  messagesSent   Message[]
+  transactions   Transaction[]
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  budget      Float
+  status      String    @default("OPEN") // OPEN, IN_PROGRESS, COMPLETED
+  createdAt   DateTime  @default(now())
+
+  clientId    String
+  client      User      @relation("ClientTasks", fields: [clientId], references: [id])
+  
+  proposals   Proposal[]
+}
+
+model Proposal {
+  id          String    @id @default(uuid())
+  pitch       String
+  price       Float
+  createdAt   DateTime  @default(now())
+
+  marketerId  String
+  marketer    User      @relation(fields: [marketerId], references: [id])
+
+  taskId      String
+  task        Task      @relation(fields: [taskId], references: [id])
+}
+
+model FeedPost {
+  id        String   @id @default(uuid())
+  content   String
+  imageUrl  String?  // Can be a Base64 string for images
+  type      String   @default("INSIGHT") // PORTFOLIO, INQUIRY, INSIGHT
+  category  String   @default("General") // SEO, SMM, Ads, Design, etc.
+  createdAt DateTime @default(now())
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants User[]    @relation("UserConversations")
+  messages     Message[]
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  content        String
+  createdAt      DateTime     @default(now())
+  
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id])
+  
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  amount      Float
+  type        String   // e.g. "DEPOSIT", "WITHDRAWAL", "PAYMENT", "EARNING"
+  status      String   @default("COMPLETED") // PENDING, COMPLETED, FAILED
+  description String
+  createdAt   DateTime @default(now())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}

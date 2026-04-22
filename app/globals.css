@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0b0f1a;
+  --color-foreground: hsl(210 40% 98%);
+  --color-card: rgba(11, 15, 26, 0.4);
+  --color-card-foreground: hsl(210 40% 98%);
+  --color-popover: rgba(11, 15, 26, 0.4);
+  --color-popover-foreground: hsl(210 40% 98%);
+  
+  /* Primary: Deep Navy */
+  --color-primary: #0b0f1a;
+  --color-primary-foreground: hsl(210 40% 98%);
+  
+  /* Secondary: Baby Blue / Sky Blue */
+  --color-secondary: hsl(198 85% 70%); /* #6ecdf4 approximate */
+  --color-secondary-foreground: hsl(226 24% 8%);
+  
+  /* Accent: Bright Orange */
+  --color-accent: hsl(24 95% 55%); /* #f06a18 approximate */
+  --color-accent-foreground: hsl(0 0% 100%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-border: hsl(225 15% 15%);
+  --color-input: hsl(225 15% 15%);
+  --color-ring: hsl(250 89% 65%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(235, 140, 84, 0.3);
+    color: var(--color-foreground);
+  }
+}
+
+/* Glassmorphism Classes */
+@layer utilities {
+  .glass {
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .glass-card {
+    position: relative;
+    background-color: rgba(15, 20, 35, 0.6);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+  .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
+}
