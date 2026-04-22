@@ -16,7 +16,7 @@ export default function Navbar() {
         {/* Brand Logo */}
         <Link href="/" className="flex items-center shrink-0">
           <div className="relative w-32 h-10 md:w-36 md:h-12 overflow-hidden">
-            <Image src="/logo.png" alt="Task Media" fill className="object-contain invert brightness-0 invert drop-shadow-md" priority />
+            <Image src="/logo.png" alt="Task Media" fill className="object-contain drop-shadow-md" priority />
           </div>
         </Link>
         
