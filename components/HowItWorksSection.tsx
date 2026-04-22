@@ -16,10 +16,10 @@ export default function HowItWorksSection() {
   return (
     <section id="how-it-works" className="py-24 relative z-10 w-full px-6 bg-black/10 border-y border-white/5">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20 max-w-2xl mx-auto space-y-4">
+        <div className="text-center mb-20 max-w-2xl mx-auto space-y-6 relative z-30">
            <span className="text-accent font-bold tracking-widest text-sm uppercase">{t('simpleProcess')}</span>
-           <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t('howItWorks')}</h2>
-           <p className="text-slate-400 text-lg font-medium">{t('howItWorksSub')}</p>
+           <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-normal md:leading-tight relative z-20">{t('howItWorks')}</h2>
+           <p className="text-slate-400 text-lg font-medium leading-relaxed">{t('howItWorksSub')}</p>
         </div>
 
         <div className="relative">

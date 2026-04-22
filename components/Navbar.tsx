@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { UserCog, Briefcase, UserCircle, Globe, Zap } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 import NotificationDropdown from "./NotificationDropdown";
@@ -14,9 +15,7 @@ export default function Navbar() {
         
         {/* Brand Logo - Manual Injection Zone */}
         <Link href="/" className="flex items-center shrink-0">
-          <div className="w-[150px] h-[40px] border-2 border-dashed border-white/20 rounded flex items-center justify-center text-white/40 text-xs font-bold uppercase tracking-widest hover:border-white/50 transition-colors">
-            [Insert Logo Here]
-          </div>
+          <Image src="/logo.png" alt="Task Media" width={150} height={40} className="object-contain" />
         </Link>
         
         {/* Center: Navigation Links */}
