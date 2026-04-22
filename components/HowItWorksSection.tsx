@@ -26,7 +26,7 @@ export default function HowItWorksSection() {
           {/* Connector Line */}
           <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-[2px] bg-slate-800"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-y-16 md:gap-12 relative z-10">
             {steps.map((step, i) => (
               <motion.div 
                 key={i}

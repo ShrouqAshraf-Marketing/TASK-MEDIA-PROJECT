@@ -13,9 +13,11 @@ export default function Navbar() {
     <nav className="w-full fixed top-0 left-0 z-50 bg-[#0b0f1a]/40 backdrop-blur-2xl border-b border-white/10 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 h-20 flex items-center justify-between">
         
-        {/* Brand Logo - Manual Injection Zone */}
+        {/* Brand Logo */}
         <Link href="/" className="flex items-center shrink-0">
-          <Image src="/logo.png" alt="Task Media" width={150} height={40} className="object-contain" />
+          <div className="relative w-32 h-10 md:w-36 md:h-12 mix-blend-screen overflow-hidden">
+            <Image src="/logo.png" alt="Task Media" fill className="object-contain" priority />
+          </div>
         </Link>
         
         {/* Center: Navigation Links */}
