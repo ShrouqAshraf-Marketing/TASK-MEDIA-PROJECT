@@ -14,9 +14,14 @@ export default function Navbar() {
       <div className="max-w-[90rem] mx-auto px-6 h-20 flex items-center justify-between">
         
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center shrink-0">
-          <div className="relative w-32 h-10 md:w-36 md:h-12 overflow-hidden">
-            <Image src="/logo.png" alt="Task Media" fill className="object-contain drop-shadow-md" priority />
+        <Link href="/" className="flex items-center shrink-0 group">
+          <div className="flex items-center gap-2.5">
+             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6ecdf4] to-[#f47f6e] flex items-center justify-center shadow-lg shadow-[#6ecdf4]/20 group-hover:scale-105 transition-transform duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+             </div>
+             <span className="text-2xl font-black text-white tracking-tight">TASK<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6ecdf4] to-[#f47f6e]">MEDIA</span></span>
           </div>
         </Link>
         

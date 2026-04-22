@@ -48,11 +48,23 @@ export default function LoginPage() {
         className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 shadow-2xl relative z-10"
       >
         <div className="flex justify-center mb-6">
-           <img src="/logo.png" alt="Task Media Logo" className="w-16 h-16 drop-shadow-md" style={{ objectFit: 'contain' }} />
+           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6ecdf4] to-[#f47f6e] flex items-center justify-center shadow-xl shadow-[#6ecdf4]/20">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+           </div>
         </div>
         
         <h1 className="text-3xl font-extrabold text-white text-center mb-2">تسجيل الدخول</h1>
-        <p className="text-slate-400 text-center font-medium mb-8">مرحباً بك مجدداً في منصة تاسك ميديا</p>
+        <p className="text-slate-400 text-center font-medium mb-4">مرحباً بك مجدداً في منصة تاسك ميديا</p>
+
+        <div className="bg-secondary/10 border border-secondary/20 rounded-xl p-4 mb-8 text-xs text-secondary/90 font-medium text-center">
+           <strong className="block mb-1 text-secondary">حسابات تجريبية (لاختبار المنصة):</strong>
+           admin@taskmedia.com <br/>
+           client@taskmedia.com <br/>
+           marketer@taskmedia.com <br/>
+           <span className="opacity-70">(أي كلمة مرور ستعمل)</span>
+        </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && <div className="text-red-400 text-sm font-bold bg-red-400/10 p-3 rounded-lg border border-red-400/20">{error}</div>}
