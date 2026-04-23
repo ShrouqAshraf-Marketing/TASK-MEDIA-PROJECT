@@ -18,15 +18,15 @@ export default function HowItWorksSection() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 max-w-2xl mx-auto space-y-6 relative z-30">
            <span className="text-accent font-bold tracking-widest text-sm uppercase">{t('simpleProcess')}</span>
-           <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-normal md:leading-tight relative z-20">{t('howItWorks')}</h2>
-           <p className="text-slate-400 text-lg font-medium leading-relaxed">{t('howItWorksSub')}</p>
+           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-normal md:leading-tight relative z-20">{t('howItWorks')}</h2>
+           <p className="text-slate-400 text-base md:text-lg font-medium leading-relaxed">{t('howItWorksSub')}</p>
         </div>
 
         <div className="relative">
           {/* Connector Line */}
           <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-[2px] bg-slate-800"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-y-24 md:gap-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-12 relative z-10">
             {steps.map((step, i) => (
               <motion.div 
                 key={i}

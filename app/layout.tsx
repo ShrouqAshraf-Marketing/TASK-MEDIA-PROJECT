@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className="dark">
-      <body className={`${cairo.className} antialiased selection:bg-accent/30 selection:text-white`}>
+      <body className={`${cairo.className} antialiased selection:bg-accent/30 selection:text-white overflow-x-hidden`}>
         <Providers>
           <LanguageProvider>
             <ToastProvider>

@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full fixed top-0 left-0 z-50 bg-[#0b0f1a]/40 backdrop-blur-2xl border-b border-white/10 transition-all duration-300">
-      <div className="max-w-[90rem] mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-[90rem] mx-auto px-4 py-3 lg:py-0 lg:h-20 flex flex-col lg:flex-row items-center justify-between gap-3 lg:gap-0">
         
         {/* Brand Logo */}
         <Link href="/" className="flex items-center shrink-0 group">

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Copy, PenTool, LayoutTemplate, MessageSquareMore, Layers, PieChart } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,17 @@ export default function DeckOfCardsFeatures() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-150px" });
   const { t } = useLanguage();
+  
+  const [isMobile, setIsMobile] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const services = [
     {
@@ -72,10 +83,10 @@ export default function DeckOfCardsFeatures() {
   };
 
   return (
-    <div className="relative w-full pb-32 flex flex-col items-center justify-center min-h-[550px]" ref={ref}>
+    <div className="relative w-full pb-16 lg:pb-32 flex flex-col items-center justify-center min-h-auto lg:min-h-[550px]" ref={ref}>
        
        {/* Cards Deck Area */}
-       <div className="relative w-full max-w-[1200px] h-fit md:h-[400px] flex items-center justify-center pt-10">
+       <div className="relative w-full max-w-[1200px] flex flex-col lg:block items-center justify-center pt-10 gap-6 lg:gap-0 lg:h-[400px]">
           {services.map((svc, i) => (
              <motion.div
                key={i}
@@ -89,16 +100,16 @@ export default function DeckOfCardsFeatures() {
                }}
                animate={isInView ? {
                   opacity: 1,
-                  x: typeof window !== 'undefined' && window.innerWidth > 1024 ? desktopSpread[i].x : 0,
-                  y: typeof window !== 'undefined' && window.innerWidth > 1024 ? desktopSpread[i].y : i * 220,
-                  rotate: typeof window !== 'undefined' && window.innerWidth > 1024 ? desktopSpread[i].rotate : 0,
-                  scale: typeof window !== 'undefined' && window.innerWidth > 1024 ? 1 : 1,
+                  x: isMounted && !isMobile ? desktopSpread[i].x : 0,
+                  y: isMounted && !isMobile ? desktopSpread[i].y : 0,
+                  rotate: isMounted && !isMobile ? desktopSpread[i].rotate : 0,
+                  scale: 1,
                   zIndex: i
                } : {}}
                whileHover={{ 
-                  scale: 1.08, 
-                  y: typeof window !== 'undefined' && window.innerWidth > 1024 ? desktopSpread[i].y - 40 : i * 220 - 10,
-                  rotate: typeof window !== 'undefined' && window.innerWidth > 1024 ? desktopSpread[i].rotate / 2 : 0,
+                  scale: 1.05, 
+                  y: isMounted && !isMobile ? desktopSpread[i].y - 40 : -10,
+                  rotate: isMounted && !isMobile ? desktopSpread[i].rotate / 2 : 0,
                   zIndex: 50 
                }}
                transition={{ 
@@ -108,7 +119,7 @@ export default function DeckOfCardsFeatures() {
                   delay: i * 0.1 
                }}
                onClick={() => handleCardClick(svc.id)}
-               className="absolute w-[280px] h-fit min-h-[300px] bg-[#0b0f1a] border-2 border-white/5 rounded-[2rem] p-8 shadow-xl flex flex-col justify-between cursor-pointer group hover:border-accent/40"
+               className="relative lg:absolute w-full max-w-[320px] lg:max-w-none lg:w-[280px] h-fit min-h-[300px] bg-[#0b0f1a] border-2 border-white/5 rounded-[2rem] p-8 shadow-xl flex flex-col justify-between cursor-pointer group hover:border-accent/40"
                style={{
                   boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)"
                }}

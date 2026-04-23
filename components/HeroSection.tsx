@@ -20,7 +20,7 @@ export default function HeroSection() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl lg:text-[5.5rem] leading-[1.05] tracking-tight font-extrabold text-white"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] leading-[1.05] tracking-tight font-extrabold text-white"
           >
              Revolutionize Your <br className="hidden lg:block"/>
              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-secondary drop-shadow-[0_0_10px_rgba(75,180,204,0.3)]">Marketing</span> <br className="hidden lg:block"/>
@@ -30,7 +30,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg lg:text-xl text-slate-400 max-w-2xl font-medium mx-auto lg:mx-0 leading-relaxed"
+            className="text-base sm:text-lg lg:text-xl text-slate-400 max-w-2xl font-medium mx-auto lg:mx-0 leading-relaxed"
           >
              The ultimate platform connecting ambitious businesses with elite freelance marketers. Build faster. Scale smarter.
           </motion.p>
@@ -40,10 +40,10 @@ export default function HeroSection() {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row items-center gap-5 justify-center lg:justify-start pt-4"
           >
-             <button className="w-full sm:w-auto bg-gradient-to-r from-secondary to-accent hover:opacity-90 text-white px-8 py-4 rounded-2xl font-bold tracking-wide shadow-xl shadow-secondary/20 transition-all hover:scale-105 active:scale-95 text-lg">
+             <button className="w-full sm:w-auto bg-gradient-to-r from-secondary to-accent hover:opacity-90 text-white px-8 py-4 rounded-2xl font-bold tracking-wide shadow-xl shadow-secondary/20 transition-all hover:scale-105 active:scale-95 text-base sm:text-lg">
                 Find Marketers
              </button>
-             <button className="w-full sm:w-auto bg-transparent hover:bg-white/5 text-white border-2 border-white/20 px-8 py-4 rounded-2xl font-bold tracking-wide transition-all hover:scale-105 active:scale-95 text-lg">
+             <button className="w-full sm:w-auto bg-transparent hover:bg-white/5 text-white border-2 border-white/20 px-8 py-4 rounded-2xl font-bold tracking-wide transition-all hover:scale-105 active:scale-95 text-base sm:text-lg">
                 Become a Marketer
              </button>
           </motion.div>
@@ -54,13 +54,13 @@ export default function HeroSection() {
              <motion.div
                key={i}
                initial={{ opacity: 0, x: 100, rotate: 0 }}
-               animate={{ opacity: 1, x: i * 30 - 40, y: i * -20, rotate: 10 + (i * 2) }}
+               animate={{ opacity: 1, x: i * 20 - 20, y: i * -15, rotate: 10 + (i * 2) }}
                transition={{ duration: 0.8, delay: 0.3 + (i * 0.2), type: "spring" }}
-               whileHover={{ y: i * -20 - 15, scale: 1.05, zIndex: 50, transition: { duration: 0.2 } }}
-               className="absolute bg-slate-900/40 backdrop-blur-2xl border border-white/10 p-6 rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] w-[280px] cursor-pointer"
+               whileHover={{ y: i * -15 - 15, scale: 1.05, zIndex: 50, transition: { duration: 0.2 } }}
+               className="absolute bg-slate-900/40 backdrop-blur-2xl border border-white/10 p-5 md:p-6 rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] w-[240px] md:w-[280px] cursor-pointer"
                style={{ zIndex: i + 10 }}
              >
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${card.color}`}>
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center mb-4 md:mb-5 ${card.color}`}>
                    {card.icon}
                 </div>
                 <h3 className="font-bold text-white text-lg mb-2">{card.title}</h3>
