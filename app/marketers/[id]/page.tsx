@@ -45,7 +45,7 @@ export default function MarketerProfilePage({ params }: { params: Promise<{ id: 
 
       const pRes = await fetch(`/api/posts`);
       const pData = await pRes.json();
-      setPosts(pData.filter((p: any) => p.authorId === id));
+      setPosts(Array.isArray(pData) ? pData.filter((p: any) => p.authorId === id) : []);
     } catch (error) {
       console.error(error);
       setMarketer(null);

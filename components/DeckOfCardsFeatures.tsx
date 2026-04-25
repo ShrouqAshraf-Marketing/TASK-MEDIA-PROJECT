@@ -25,42 +25,42 @@ export default function DeckOfCardsFeatures() {
 
   const services = [
     {
-      id: "content",
+      id: "Content",
       title: t('content'),
       desc: t('smm'),
       icon: <PenTool className="w-8 h-8 text-white" />,
       color: "from-orange-500 to-accent"
     },
     {
-      id: "seo",
+      id: "SEO",
       title: t('seo'),
       desc: t('content'),
       icon: <LayoutTemplate className="w-8 h-8 text-white" />,
       color: "from-secondary to-cyan-400"
     },
     {
-      id: "smm",
+      id: "Social Media",
       title: t('smm'),
       desc: t('ads'),
       icon: <Copy className="w-8 h-8 text-white" />,
       color: "from-slate-600 to-slate-400"
     },
     {
-      id: "ads",
+      id: "Ads",
       title: t('ads'),
       desc: t('smm'),
       icon: <MessageSquareMore className="w-8 h-8 text-white" />,
       color: "from-accent to-orange-400"
     },
     {
-      id: "design",
+      id: "Design",
       title: t('design'),
       desc: t('content'),
       icon: <Layers className="w-8 h-8 text-white" />,
       color: "from-indigo-500 to-purple-400"
     },
     {
-      id: "market",
+      id: "Strategy",
       title: t('marketStudy'),
       desc: t('seo'),
       icon: <PieChart className="w-8 h-8 text-white" />,
@@ -86,7 +86,7 @@ export default function DeckOfCardsFeatures() {
     <div className="relative w-full pb-16 lg:pb-32 flex flex-col items-center justify-center min-h-auto lg:min-h-[550px]" ref={ref}>
        
        {/* Cards Deck Area */}
-       <div className="relative w-full max-w-[1200px] flex flex-col lg:block items-center justify-center pt-10 gap-6 lg:gap-0 lg:h-[400px]">
+       <div className="relative w-full max-w-[1200px] mx-auto flex flex-col lg:block items-center justify-center pt-10 gap-6 lg:gap-0 lg:h-[400px]">
           {services.map((svc, i) => (
              <motion.div
                key={i}

@@ -14,6 +14,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { useToast } from "@/components/ToastContext";
 import Link from "next/link";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, AreaChart, Area, Cell } from "recharts";
+
+const DEMAND_DATA = [
+  { name: "Video", demand: 40 },
+  { name: "SEO", demand: 25 },
+  { name: "Ads", demand: 20 },
+  { name: "Design", demand: 10 },
+  { name: "Content", demand: 5 },
+];
+
+const AVG_PRICES = [
+  { service: 'تصميم شعار (Logo)', price: '$150', icon: <ImageIcon className="w-5 h-5 text-purple-400" />, trend: '+5%' },
+  { service: 'مراجعة SEO', price: '$300', icon: <Target className="w-5 h-5 text-emerald-400" />, trend: '+12%' },
+  { service: 'إدارة حملة إعلانية', price: '$500', icon: <Zap className="w-5 h-5 text-orange-400" />, trend: '+8%' },
+  { service: 'مقال (1000 كلمة)', price: '$45', icon: <Briefcase className="w-5 h-5 text-blue-400" />, trend: '-2%' },
+];
 
 interface Post {
   id: string;
@@ -111,6 +127,93 @@ export default function PulsePage() {
               {t('pulseSub')}
            </motion.p>
         </header>
+
+        {/* Stunning Market Intelligence Dashboard */}
+        <div className="mb-24 space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+           <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-black text-white flex items-center gap-3">
+                 <TrendingUp className="w-8 h-8 text-secondary" /> إحصائيات السوق الحية
+              </h2>
+              <span className="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-black tracking-widest uppercase flex items-center gap-2">
+                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                 تحديث مباشر
+              </span>
+           </div>
+
+           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Most Demanded Chart */}
+              <div className="lg:col-span-2 p-8 rounded-[3rem] bg-slate-900/60 backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
+                 <h3 className="text-xl font-black text-white mb-8">أكثر الخدمات طلباً هذا الأسبوع</h3>
+                 <div className="h-64 w-full" dir="ltr">
+                    <ResponsiveContainer width="100%" height="100%">
+                       <BarChart data={DEMAND_DATA}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
+                          <XAxis dataKey="name" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 'bold' }} axisLine={false} tickLine={false} />
+                          <Tooltip 
+                            cursor={{ fill: '#ffffff05' }} 
+                            contentStyle={{ backgroundColor: '#0f172a', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', fontWeight: 'bold' }} 
+                            itemStyle={{ color: '#6ecdf4' }}
+                          />
+                          <Bar dataKey="demand" fill="#6ecdf4" radius={[8, 8, 0, 0]} className="group-hover:opacity-80 transition-opacity">
+                             {DEMAND_DATA.map((entry, index) => (
+                               <Cell key={`cell-${index}`} fill={index === 0 ? '#f06a18' : '#6ecdf4'} />
+                             ))}
+                          </Bar>
+                       </BarChart>
+                    </ResponsiveContainer>
+                 </div>
+                 <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-secondary/5 blur-[100px] rounded-full group-hover:bg-secondary/10 transition-all"></div>
+              </div>
+
+              {/* Top Marketers Preview */}
+              <div className="p-8 rounded-[3rem] bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 shadow-2xl flex flex-col justify-between">
+                 <div>
+                    <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2"><Award className="w-5 h-5 text-secondary" /> أعلى الخبراء تقييماً</h3>
+                    <div className="space-y-4">
+                       {[
+                         { name: 'محمود كمال', role: 'خبير تحسين محركات البحث', rate: '5.0', img: 'M' },
+                         { name: 'ليلى حسن', role: 'مصممة هويات بصرية', rate: '4.9', img: 'L' },
+                         { name: 'طارق زين', role: 'مطور واجهات ومواقع', rate: '4.9', img: 'T' }
+                       ].map((user, i) => (
+                          <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+                             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center font-black text-white border border-white/10 shadow-lg">
+                                {user.img}
+                             </div>
+                             <div className="flex-1 min-w-0 text-right">
+                                <h4 className="text-sm font-black text-white truncate">{user.name}</h4>
+                                <p className="text-[10px] text-slate-400 truncate">{user.role}</p>
+                             </div>
+                             <div className="flex items-center gap-1 font-black text-secondary">
+                                {user.rate} <Star className="w-3 h-3 fill-secondary" />
+                             </div>
+                          </div>
+                       ))}
+                    </div>
+                 </div>
+                 <Link href="/marketers" className="w-full mt-6 py-4 rounded-2xl bg-secondary text-[#020617] font-black text-center text-sm hover:scale-[1.02] active:scale-95 transition-transform shadow-xl shadow-secondary/20">
+                    تصفح الدليل الشامل
+                 </Link>
+              </div>
+           </div>
+
+           {/* Avg Prices Row */}
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {AVG_PRICES.map((item, i) => (
+                <div key={i} className="p-6 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-3xl border border-white/5 hover:border-white/10 transition-colors flex flex-col items-center text-center group">
+                   <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-white/5 shadow-lg">
+                      {item.icon}
+                   </div>
+                   <h4 className="text-sm font-bold text-slate-400 mb-2">{item.service}</h4>
+                   <div className="flex items-end justify-center gap-2">
+                      <span className="text-3xl font-black text-white">{item.price}</span>
+                      <span className={`text-[10px] font-black mb-1 px-2 py-0.5 rounded-md ${item.trend.startsWith('+') ? 'text-emerald-400 bg-emerald-500/10' : 'text-rose-400 bg-rose-500/10'}`}>
+                         {item.trend}
+                      </span>
+                   </div>
+                </div>
+              ))}
+           </div>
+        </div>
 
         {/* Filters & Search Bar */}
         <div className="flex flex-col md:flex-row gap-6 items-center justify-between mb-16 p-4 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-3xl border border-white/5 shadow-2xl">

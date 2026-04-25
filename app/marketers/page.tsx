@@ -6,17 +6,15 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import Footer from "@/components/Footer";
 import { Star, Search, Filter, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useLanguage } from "@/components/LanguageContext";
+import { Suspense } from "react";
 
-export default function MarketersPage({
-  searchParams,
-}: {
-  searchParams: { service?: string };
-}) {
+function MarketersContent() {
   const { t } = useLanguage();
   const router = useRouter();
-  const serviceFilter = searchParams.service || "";
+  const searchParams = useSearchParams();
+  const serviceFilter = searchParams?.get('service') || "";
   const [marketers, setMarketers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +22,11 @@ export default function MarketersPage({
     fetch('/api/marketers')
       .then(res => res.json())
       .then(data => {
+        if (!Array.isArray(data)) {
+          setMarketers([]);
+          setLoading(false);
+          return;
+        }
         let filtered = data;
         if (serviceFilter) {
           filtered = data.filter((m: any) => 
@@ -35,6 +38,7 @@ export default function MarketersPage({
       })
       .catch(err => {
         console.error(err);
+        setMarketers([]);
         setLoading(false);
       });
   }, [serviceFilter]);
@@ -94,7 +98,7 @@ export default function MarketersPage({
                   <h3 className="text-2xl font-black text-white mb-2 group-hover:text-secondary transition-colors">{m.name}</h3>
                   <div className="flex flex-wrap gap-2 mb-6">
                     {(m.specialties || '').split(',').filter(Boolean).map((s: string) => (
-                      <span key={s} className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black text-slate-400 uppercase tracking-wider">
+                      <span key={s} className="px-3 py-1.5 rounded-lg bg-secondary/10 border border-secondary/20 text-[10px] font-black text-secondary uppercase tracking-wider shadow-sm">
                         {s}
                       </span>
                     ))}
@@ -133,5 +137,13 @@ export default function MarketersPage({
         <Footer />
       </div>
     </main>
+  );
+}
+
+export default function MarketersPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#020617] flex items-center justify-center text-white">Loading...</div>}>
+      <MarketersContent />
+    </Suspense>
   );
 }

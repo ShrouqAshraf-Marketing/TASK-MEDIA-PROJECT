@@ -1,6 +1,33 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+function generateMockMarketers() {
+  const categories = ["Content", "SEO", "Social Media", "Ads", "Design", "Strategy"];
+  const arabicNames = ["أحمد", "محمد", "محمود", "علي", "عمر", "خالد", "حسن", "حسين", "سارة", "فاطمة", "نورة", "مريم", "زينب", "هند", "ياسمين", "كريم", "طارق", "سامي", "رامي", "ماجد", "وليد", "عبدالرحمن", "سعد"];
+  const lastNames = ["حسن", "محمد", "عبدالله", "إبراهيم", "علي", "سليمان", "يوسف", "عادل", "كمال", "سعيد", "فارس", "منصور", "الغامدي", "العتيبي", "الدوسري", "المطيري", "الجهني", "الزهراني"];
+  
+  const generatedMarketers = [];
+  let idCounter = 1;
+  
+  for (const category of categories) {
+    for (let i = 0; i < 10; i++) {
+       const fName = arabicNames[Math.floor(Math.random() * arabicNames.length)];
+       const lName = lastNames[Math.floor(Math.random() * lastNames.length)];
+       generatedMarketers.push({
+         id: `mock_m_${category.replace(/\s+/g, '_')}_${idCounter++}`,
+         name: `${fName} ${lName}`,
+         email: `user${idCounter}@mock.com`,
+         rating: parseFloat((Math.random() * (5.0 - 4.2) + 4.2).toFixed(1)),
+         startingPrice: Math.floor(Math.random() * 15) * 100 + 300,
+         specialties: category,
+         bio: `خبير متخصص في ${category} مع سجل حافل من النجاحات والخبرة الطويلة في مساعدة الشركات على النمو وتحقيق الأهداف المرجوة بكفاءة عالية وبأفضل المعايير.`,
+         profileImage: null
+       });
+    }
+  }
+  return generatedMarketers;
+}
+
 export async function GET() {
   try {
     let marketers = await prisma.user.findMany({
@@ -19,44 +46,14 @@ export async function GET() {
       }
     });
 
-    if (!marketers || marketers.length === 0) {
-      marketers = [
-        {
-          id: "m1",
-          name: "أحمد حسن",
-          email: "ahmed@example.com",
-          rating: 4.9,
-          startingPrice: 500,
-          specialties: "SEO,هندسة المحتوى",
-          bio: "خبير استراتيجي في محركات البحث مع خبرة 7 سنوات في السوق الخليجي.",
-          profileImage: null
-        },
-        {
-          id: "m2",
-          name: "سارة محمد",
-          email: "sarah@example.com",
-          rating: 4.8,
-          startingPrice: 750,
-          specialties: "إعلانات أدائية,استراتيجية السوشيال ميديا",
-          bio: "متخصصة في الإعلانات المدفوعة وإدارة حملات السوشيال ميديا بميزانيات ضخمة.",
-          profileImage: null
-        },
-        {
-          id: "m3",
-          name: "عمر خالد",
-          email: "omar@example.com",
-          rating: 5.0,
-          startingPrice: 1200,
-          specialties: "هوية العلامة التجارية,تصميم",
-          bio: "مصمم هويات بصرية وعلامات تجارية متكاملة للشركات الكبرى والمؤسسات.",
-          profileImage: null
-        }
-      ] as any;
-    }
+    const mockMarketers = generateMockMarketers();
+    // Combine real DB marketers with generated mock marketers
+    marketers = [...marketers, ...mockMarketers];
 
     return NextResponse.json(marketers);
   } catch (error) {
     console.error("Fetch Marketers Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    // Return dummy data instead of failing if DB is unreachable
+    return NextResponse.json(generateMockMarketers());
   }
 }

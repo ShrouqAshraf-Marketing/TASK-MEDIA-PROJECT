@@ -42,9 +42,10 @@ export default function ClientDashboard() {
     try {
       const res = await fetch(`/api/tasks?clientId=${session.user.id}`);
       const data = await res.json();
-      setTasks(data);
+      setTasks(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setTasks([]);
     } finally {
       setLoading(false);
     }
@@ -54,9 +55,10 @@ export default function ClientDashboard() {
     try {
       const res = await fetch("/api/posts");
       const data = await res.json();
-      setFeedPosts(data);
+      setFeedPosts(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setFeedPosts([]);
     }
   };
 

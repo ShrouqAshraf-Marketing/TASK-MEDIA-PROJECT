@@ -35,9 +35,10 @@ export default function AdminDashboard() {
     try {
       const res = await fetch("/api/transactions");
       const data = await res.json();
-      setTransactions(data);
+      setTransactions(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setTransactions([]);
     } finally {
       setLoading(false);
     }

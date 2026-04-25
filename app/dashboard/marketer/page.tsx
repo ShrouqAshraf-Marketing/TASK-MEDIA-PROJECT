@@ -52,9 +52,10 @@ export default function MarketerDashboard() {
     try {
       const res = await fetch("/api/transactions");
       const data = await res.json();
-      setTransactions(data);
+      setTransactions(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setTransactions([]);
     }
   };
 
@@ -62,9 +63,10 @@ export default function MarketerDashboard() {
     try {
       const res = await fetch("/api/tasks?status=OPEN");
       const data = await res.json();
-      setTasks(data);
+      setTasks(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setTasks([]);
     } finally {
       setLoading(false);
     }
@@ -74,9 +76,10 @@ export default function MarketerDashboard() {
     try {
       const res = await fetch("/api/posts");
       const data = await res.json();
-      setFeedPosts(data);
+      setFeedPosts(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setFeedPosts([]);
     }
   };
 
@@ -238,21 +241,29 @@ export default function MarketerDashboard() {
                       <div key={task.id} className="p-8 rounded-[2.5rem] bg-slate-900/60 border border-white/10 hover:border-orange-500/30 transition-all group relative overflow-hidden">
                          <div className="relative z-10">
                             <div className="flex justify-between items-start mb-6">
-                               <div className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[10px] font-black text-orange-400 uppercase tracking-widest">
-                                  {task.category}
+                               <div className="flex flex-col gap-2">
+                                  <div className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[10px] font-black text-orange-400 uppercase tracking-widest w-fit">
+                                     {task.category}
+                                  </div>
                                </div>
-                               <span className="text-xl font-black text-white">${task.budget}</span>
+                               <div className="flex flex-col items-end">
+                                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">{t('budget')}</span>
+                                  <span className="text-2xl font-black text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20 shadow-inner">${task.budget}</span>
+                               </div>
                             </div>
                             <h4 className="text-2xl font-black text-white mb-3 group-hover:text-orange-400 transition-colors">{task.title}</h4>
                             <p className="text-slate-400 text-sm font-medium line-clamp-3 mb-8 leading-relaxed">
                                {task.description}
                             </p>
                             <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                               <div className="flex items-center gap-2">
-                                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[10px] font-black text-slate-400 uppercase">
+                               <div className="flex items-center gap-3">
+                                  <div className="w-10 h-10 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center text-sm font-black text-white uppercase shadow-inner">
                                      {task.client?.name?.charAt(0)}
                                   </div>
-                                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{task.client?.name?.split(' ')[0]}</span>
+                                  <div className="flex flex-col">
+                                     <span className="text-xs font-black text-slate-300">{task.client?.name || 'عميل'}</span>
+                                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t('client')}</span>
+                                  </div>
                                </div>
                                <button 
                                  onClick={() => setShowApplyModal(task.id)}
