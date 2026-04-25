@@ -24,6 +24,8 @@ export default function MarketerProfilePage({ params }: { params: Promise<{ id: 
   const [loading, setLoading] = useState(true);
   const [showMediaKit, setShowMediaKit] = useState(false);
   const [showConsultModal, setShowConsultModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: "" });
 
   useEffect(() => {
     fetchMarketerData();
@@ -58,6 +60,13 @@ export default function MarketerProfilePage({ params }: { params: Promise<{ id: 
 
   const handleConsult = () => {
      window.dispatchEvent(new CustomEvent('openChatWith', { detail: { userId: id } }));
+  };
+
+  const handleSubmitReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    showToast(lang === 'ar' ? "تم إرسال التقييم بنجاح! شكراً لك." : "Review submitted successfully! Thank you.", "success");
+    setShowReviewModal(false);
+    setReviewForm({ rating: 5, comment: "" });
   };
 
   if (loading) return (
@@ -146,6 +155,9 @@ export default function MarketerProfilePage({ params }: { params: Promise<{ id: 
                     </button>
                     <button onClick={handleMediaKit} className="px-10 py-5 bg-white/5 border border-white/5 text-white font-black rounded-3xl backdrop-blur-md flex items-center gap-3 text-lg hover:bg-white/10 transition-all">
                        <FileText className="w-6 h-6" /> الملف التعريفي والتقييمات
+                    </button>
+                    <button onClick={() => setShowReviewModal(true)} className="px-10 py-5 bg-white/5 border border-white/5 text-white font-black rounded-3xl backdrop-blur-md flex items-center gap-3 text-lg hover:bg-white/10 transition-all">
+                       <Star className="w-6 h-6" /> إضافة تقييم
                     </button>
                  </div>
               </div>
@@ -293,6 +305,70 @@ export default function MarketerProfilePage({ params }: { params: Promise<{ id: 
                 </div>
 
                 <button onClick={() => setShowMediaKit(false)} className="w-full py-5 bg-white/5 border border-white/5 text-white font-black rounded-3xl hover:bg-white/10 transition-all">إغلاق الملف</button>
+             </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Review Modal */}
+      <AnimatePresence>
+        {showReviewModal && (
+          <div className="fixed inset-0 z-[400] flex items-center justify-center p-6">
+             <motion.div 
+               initial={{ opacity: 0 }} 
+               animate={{ opacity: 1 }} 
+               exit={{ opacity: 0 }} 
+               onClick={() => setShowReviewModal(false)}
+               className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+             />
+             <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="relative w-full max-w-xl rounded-[3rem] bg-slate-900 border border-white/10 p-10 overflow-hidden shadow-3xl text-right"
+             >
+                <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5 flex-row-reverse">
+                   <h2 className="text-2xl font-black text-white flex items-center gap-3 flex-row-reverse">
+                      <Star className="w-6 h-6 text-accent fill-accent" /> إضافة تقييم
+                   </h2>
+                   <button onClick={() => setShowReviewModal(false)} className="p-2 hover:bg-white/5 rounded-xl transition-colors">
+                      <X className="w-5 h-5 text-slate-400" />
+                   </button>
+                </div>
+
+                <form onSubmit={handleSubmitReview} className="space-y-6">
+                   <div className="space-y-2">
+                      <label className="text-xs font-black text-slate-400 uppercase tracking-widest block">تقييمك (من 1 إلى 5)</label>
+                      <div className="flex items-center justify-end gap-2 flex-row-reverse">
+                         {[1, 2, 3, 4, 5].map((star) => (
+                           <button 
+                             key={star}
+                             type="button"
+                             onClick={() => setReviewForm({ ...reviewForm, rating: star })}
+                             className={`p-3 rounded-2xl border transition-all ${reviewForm.rating >= star ? 'bg-accent/20 border-accent/40 text-accent' : 'bg-white/5 border-white/10 text-slate-500 hover:bg-white/10'}`}
+                           >
+                              <Star className={`w-6 h-6 ${reviewForm.rating >= star ? 'fill-accent' : ''}`} />
+                           </button>
+                         ))}
+                      </div>
+                   </div>
+
+                   <div className="space-y-2">
+                      <label className="text-xs font-black text-slate-400 uppercase tracking-widest block">تعليقك وتجربتك</label>
+                      <textarea 
+                        required 
+                        rows={4} 
+                        value={reviewForm.comment}
+                        onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                        placeholder="كيف كانت تجربتك مع هذا الخبير؟ شارك التفاصيل..." 
+                        className="w-full bg-slate-950/50 border border-white/10 text-white rounded-2xl py-4 px-6 focus:outline-none focus:border-accent transition-all resize-none text-right"
+                      />
+                   </div>
+
+                   <button type="submit" className="w-full py-5 bg-gradient-to-r from-accent to-secondary text-white font-black rounded-2xl shadow-xl shadow-accent/20 hover:scale-[1.02] active:scale-95 transition-all text-lg mt-4">
+                      نشر التقييم
+                   </button>
+                </form>
              </motion.div>
           </div>
         )}

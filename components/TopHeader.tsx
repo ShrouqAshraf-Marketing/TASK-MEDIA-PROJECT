@@ -43,7 +43,7 @@ export default function TopHeader() {
              transition={{ delay: 0.2 }}
              className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
           >
-             <Link href="/dashboard" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-accent text-white font-bold hover:bg-orange-600 transition-all shadow-[0_0_20px_rgba(240,106,24,0.3)] hover:scale-105 active:scale-95 group">
+             <Link href="/marketers" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-accent text-white font-bold hover:bg-orange-600 transition-all shadow-[0_0_20px_rgba(240,106,24,0.3)] hover:scale-105 active:scale-95 group">
                 {t('hireMarketer')}
              </Link>
              <Link href="/dashboard" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl border-2 border-secondary text-secondary font-bold hover:bg-secondary/10 transition-all hover:scale-105 active:scale-95">

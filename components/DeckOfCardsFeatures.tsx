@@ -119,7 +119,7 @@ export default function DeckOfCardsFeatures() {
                   delay: i * 0.1 
                }}
                onClick={() => handleCardClick(svc.id)}
-               className="relative lg:absolute w-full max-w-[320px] lg:max-w-none lg:w-[280px] h-fit min-h-[300px] bg-[#0b0f1a] border-2 border-white/5 rounded-[2rem] p-8 shadow-xl flex flex-col justify-between cursor-pointer group hover:border-accent/40"
+               className="relative lg:absolute lg:left-1/2 lg:-ml-[140px] w-full max-w-[320px] lg:max-w-none lg:w-[280px] h-fit min-h-[300px] bg-[#0b0f1a] border-2 border-white/5 rounded-[2rem] p-8 shadow-xl flex flex-col justify-between cursor-pointer group hover:border-accent/40"
                style={{
                   boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)"
                }}

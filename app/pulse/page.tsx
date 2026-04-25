@@ -49,9 +49,14 @@ export default function PulsePage() {
     try {
       const res = await fetch("/api/posts");
       const data = await res.json();
-      setPosts(data);
+      if (Array.isArray(data)) {
+        setPosts(data);
+      } else {
+        setPosts([]);
+      }
     } catch (error) {
       console.error(error);
+      setPosts([]);
     } finally {
       setLoading(false);
     }
@@ -60,8 +65,9 @@ export default function PulsePage() {
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
       const matchesCategory = activeCategory === "All" || post.category === activeCategory;
-      const matchesSearch = post.content.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           post.author.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const contentMatch = post.content ? post.content.toLowerCase().includes(searchQuery.toLowerCase()) : false;
+      const authorMatch = post.author?.name ? post.author.name.toLowerCase().includes(searchQuery.toLowerCase()) : false;
+      const matchesSearch = contentMatch || authorMatch;
       return matchesCategory && matchesSearch;
     });
   }, [posts, activeCategory, searchQuery]);
