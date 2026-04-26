@@ -49,12 +49,36 @@ export default function ChatBot() {
   useEffect(() => {
     const handleOpenChat = async (e: any) => {
       const participantId = e.detail?.userId;
-      if (!participantId || !session) return;
+      if (!participantId) return;
       
       setIsOpen(true);
       setActiveHub('messages');
-      setLoading(true);
       
+      if (!session) {
+        // Mock conversation for testing without login
+        const mockConvo = {
+          id: `mock_convo_${Date.now()}`,
+          participants: [
+            { id: "me", name: "أنا", role: "CLIENT" },
+            { id: participantId, name: "الخبير الاستراتيجي", role: "MARKETER" }
+          ],
+          updatedAt: new Date().toISOString(),
+          messages: [
+            {
+              id: "msg_1",
+              content: "مرحباً، كيف يمكنني مساعدتك في مشروعك القادم؟",
+              senderId: participantId,
+              createdAt: new Date().toISOString(),
+            }
+          ]
+        };
+        setActiveConvo(mockConvo);
+        setMessages(mockConvo.messages);
+        setView('chat');
+        return;
+      }
+      
+      setLoading(true);
       try {
         const res = await fetch("/api/conversations", {
           method: "POST",
@@ -63,6 +87,11 @@ export default function ChatBot() {
         });
         const convo = await res.json();
         
+        if (!res.ok || convo.error || !convo.id) {
+           showToast(convo.error || "فشل في بدء المحادثة", "error");
+           return;
+        }
+
         await fetchConversations();
         setActiveConvo(convo);
         setView('chat');
@@ -107,9 +136,14 @@ export default function ChatBot() {
     try {
       const res = await fetch("/api/conversations");
       const data = await res.json();
-      setConversations(data);
+      if (Array.isArray(data)) {
+        setConversations(data);
+      } else {
+        setConversations([]);
+      }
     } catch (error) {
       console.error(error);
+      setConversations([]);
     }
   };
 
@@ -117,9 +151,14 @@ export default function ChatBot() {
     try {
       const res = await fetch(`/api/messages?conversationId=${convoId}`);
       const data = await res.json();
-      setMessages(data);
+      if (Array.isArray(data)) {
+        setMessages(data);
+      } else {
+        setMessages([]);
+      }
     } catch (error) {
       console.error(error);
+      setMessages([]);
     }
   };
 
@@ -142,7 +181,31 @@ export default function ChatBot() {
       return;
     }
 
-    if (!activeConvo || !session) return;
+    if (!activeConvo) return;
+    
+    if (!session) {
+      // Mock interaction without login
+      const tempMsg = {
+        id: "temp-" + Date.now(),
+        content: inputText,
+        senderId: "me",
+        createdAt: new Date().toISOString(),
+        sender: { name: "أنا" }
+      };
+      setMessages(prev => [...prev, tempMsg]);
+      setInputText("");
+      
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          id: "reply-" + Date.now(),
+          content: "شكراً لتواصلك. (هذه محادثة تجريبية، يرجى تسجيل الدخول لحفظ المحادثات).",
+          senderId: activeConvo.participants[1].id,
+          createdAt: new Date().toISOString(),
+          sender: { name: activeConvo.participants[1].name }
+        }]);
+      }, 1000);
+      return;
+    }
 
     const tempMsg = {
       id: "temp-" + Date.now(),
@@ -176,7 +239,11 @@ export default function ChatBot() {
   };
 
   const getPartner = (convo: Conversation) => {
-    return convo.participants.find(p => p.id !== (session?.user as any)?.id) || convo.participants[0];
+    if (!convo || !Array.isArray(convo.participants)) {
+      return { id: "unknown", name: "مستخدم", role: "USER" };
+    }
+    const currentUserId = (session?.user as any)?.id || "me";
+    return convo.participants.find(p => p.id !== currentUserId) || convo.participants[0] || { id: "unknown", name: "مستخدم", role: "USER" };
   };
 
   const handleHubSwitch = (hub: 'ai' | 'messages') => {

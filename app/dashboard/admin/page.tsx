@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Users, BarChart3, Settings, ShieldCheck, 
   MessageSquare, Layers, TrendingUp, Search,
-  Filter, Download, ChevronRight, Activity, DollarSign
+  Filter, Download, ChevronRight, Activity, DollarSign, Menu, X
 } from "lucide-react";
 import Link from "next/link";
 import AnimatedBackground from "@/components/AnimatedBackground";
@@ -45,20 +45,50 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-hidden" dir="rtl">
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-x-hidden" dir="rtl">
       <AnimatedBackground />
 
+      {/* Mobile Sidebar Toggle */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-slate-900/90 backdrop-blur-xl border-b border-white/5 z-50 flex items-center justify-between px-6">
+        <Link href="/" className="flex items-center gap-2">
+           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-accent"></div>
+           <span className="text-xl font-black text-white">تاسك ميديا</span>
+        </Link>
+        <button 
+          onClick={() => {
+            const sidebar = document.getElementById('admin-sidebar');
+            sidebar?.classList.toggle('hidden');
+            sidebar?.classList.toggle('flex');
+          }}
+          className="p-2 bg-white/5 rounded-xl text-white"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      </div>
+
       {/* Sidebar */}
-      <aside className="fixed right-0 top-0 h-full w-64 bg-slate-900/50 backdrop-blur-2xl border-l border-white/5 z-40 hidden lg:flex flex-col">
-        <div className="p-8 border-b border-white/5">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-accent"></div>
-            <span className="text-xl font-black tracking-tighter text-white">تاسك ميديا</span>
-          </Link>
-          <div className="mt-2 text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase">مركز التحكم</div>
+      <aside id="admin-sidebar" className="fixed right-0 top-0 h-full w-64 bg-slate-800/95 backdrop-blur-3xl border-l border-white/5 z-[60] hidden lg:flex flex-col transition-all">
+        <div className="p-8 border-b border-white/5 flex justify-between items-center">
+          <div>
+             <Link href="/" className="flex items-center gap-2">
+               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-accent"></div>
+               <span className="text-xl font-black tracking-tighter text-white">تاسك ميديا</span>
+             </Link>
+             <div className="mt-2 text-[10px] font-bold tracking-[0.2em] text-cyan-400 uppercase">مركز التحكم</div>
+          </div>
+          <button 
+            className="lg:hidden p-2 bg-white/5 rounded-xl text-white"
+            onClick={() => {
+              const sidebar = document.getElementById('admin-sidebar');
+              sidebar?.classList.add('hidden');
+              sidebar?.classList.remove('flex');
+            }}
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2 mt-6">
+        <nav className="flex-1 p-4 space-y-2 mt-6 overflow-y-auto">
           {[
             { id: "overview", label: "نظرة عامة", icon: <BarChart3 className="w-4 h-4" /> },
             { id: "users", label: "إدارة المستخدمين", icon: <Users className="w-4 h-4" /> },
@@ -68,10 +98,17 @@ export default function AdminDashboard() {
           ].map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id as AdminTab)}
+              onClick={() => {
+                 setActiveTab(item.id as AdminTab);
+                 if (window.innerWidth < 1024) {
+                   const sidebar = document.getElementById('admin-sidebar');
+                   sidebar?.classList.add('hidden');
+                   sidebar?.classList.remove('flex');
+                 }
+              }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === item.id 
-                  ? "bg-white/10 text-white shadow-xl border border-white/10" 
+                  ? "bg-secondary text-white shadow-xl shadow-secondary/30 border border-secondary" 
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
@@ -101,7 +138,7 @@ export default function AdminDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="lg:mr-64 p-8 relative z-10">
+      <main className="lg:mr-64 p-6 pt-24 lg:pt-8 relative z-10">
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
           <div>
             <h1 className="text-3xl font-black text-white tracking-tight capitalize">
@@ -119,10 +156,10 @@ export default function AdminDashboard() {
               <input 
                 type="text" 
                 placeholder="البحث في النظام..." 
-                className="bg-slate-900/50 border border-white/5 rounded-xl py-2.5 pr-10 pl-4 text-sm outline-none focus:border-secondary transition-all w-64 text-right"
+                className="bg-slate-800/80 border border-white/5 rounded-xl py-2.5 pr-10 pl-4 text-sm outline-none focus:border-secondary transition-all w-64 text-right"
               />
             </div>
-            <button className="p-2.5 rounded-xl bg-slate-900/50 border border-white/5 text-slate-400 hover:text-white transition-colors">
+            <button className="p-2.5 rounded-xl bg-slate-800/80 border border-white/5 text-slate-400 hover:text-white transition-colors">
               <Filter className="w-5 h-5" />
             </button>
             <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-secondary text-white font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-secondary/20">
@@ -141,7 +178,7 @@ export default function AdminDashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="p-6 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 relative group cursor-default"
+                  className="p-6 rounded-3xl bg-slate-800/80 backdrop-blur-xl border border-white/5 relative group cursor-default"
                 >
                   <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
                     {s.icon}
@@ -157,7 +194,7 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
               <div className="xl:col-span-2 space-y-6">
-                <div className="rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 p-8">
+                <div className="rounded-3xl bg-slate-800/80 backdrop-blur-xl border border-white/5 p-8">
                   <div className="flex items-center justify-between mb-8">
                     <h3 className="text-xl font-black text-white">النشاط الأخير</h3>
                     <button className="text-sm font-bold text-secondary hover:underline">عرض الكل</button>
@@ -208,7 +245,7 @@ export default function AdminDashboard() {
                   <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-secondary/30 blur-3xl rounded-full"></div>
                 </div>
 
-                <div className="rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 p-8">
+                <div className="rounded-3xl bg-slate-800/80 backdrop-blur-xl border border-white/5 p-8">
                   <h3 className="text-xl font-black text-white mb-6">إعدادات المنصة</h3>
                   <div className="space-y-3">
                     <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-secondary transition-all text-left group">
@@ -256,7 +293,7 @@ export default function AdminDashboard() {
                   </div>
               </div>
 
-              <div className="bg-slate-900/60 border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
+              <div className="bg-slate-800/90 border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
                  <div className="overflow-x-auto">
                     <table className="w-full text-right">
                        <thead className="bg-white/5 text-slate-400 font-bold uppercase tracking-widest text-[10px]">
@@ -309,6 +346,164 @@ export default function AdminDashboard() {
                           ))}
                        </tbody>
                     </table>
+                 </div>
+              </div>
+           </div>
+        )}
+
+        {activeTab === "users" && (
+           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                 <div className="p-6 rounded-3xl bg-slate-800/90 border border-white/5 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><Users className="w-6 h-6 text-blue-400" /></div>
+                    <div><p className="text-sm text-slate-400 font-bold">العملاء (الشركات)</p><p className="text-2xl font-black text-white">1,842</p></div>
+                 </div>
+                 <div className="p-6 rounded-3xl bg-slate-800/90 border border-white/5 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center"><ShieldCheck className="w-6 h-6 text-secondary" /></div>
+                    <div><p className="text-sm text-slate-400 font-bold">الخبراء المعتمدون</p><p className="text-2xl font-black text-white">628</p></div>
+                 </div>
+                 <div className="p-6 rounded-3xl bg-slate-800/90 border border-white/5 flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-rose-500/20 flex items-center justify-center"><Activity className="w-6 h-6 text-rose-400" /></div>
+                    <div><p className="text-sm text-slate-400 font-bold">طلبات الانضمام (معلقة)</p><p className="text-2xl font-black text-white">11</p></div>
+                 </div>
+              </div>
+
+              <div className="bg-slate-800/90 border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
+                 <div className="overflow-x-auto">
+                    <table className="w-full text-right">
+                       <thead className="bg-white/5 text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                          <tr>
+                             <th className="p-6">المستخدم</th>
+                             <th className="p-6">نوع الحساب</th>
+                             <th className="p-6">تاريخ الانضمام</th>
+                             <th className="p-6">النشاط</th>
+                             <th className="p-6">الحالة</th>
+                             <th className="p-6">إجراءات</th>
+                          </tr>
+                       </thead>
+                       <tbody className="divide-y divide-white/5 text-sm font-medium">
+                          {[
+                            { name: "أحمد حسن", email: "ahmed@example.com", role: "MARKETER", date: "2026-04-20", activity: "نشط جداً", status: "معتمد" },
+                            { name: "شركة الأفق", email: "contact@horizon.com", role: "CLIENT", date: "2026-04-18", activity: "متوسط", status: "مفعل" },
+                            { name: "سارة محمد", email: "sarah@design.io", role: "MARKETER", date: "2026-04-25", activity: "جديد", status: "قيد المراجعة" },
+                            { name: "مجموعة النخبة", email: "info@elite.com", role: "CLIENT", date: "2026-03-10", activity: "غير نشط", status: "مفعل" }
+                          ].map((u, i) => (
+                             <tr key={i} className="hover:bg-white/5 transition-colors">
+                                <td className="p-6">
+                                   <div className="font-bold text-white">{u.name}</div>
+                                   <div className="text-xs text-slate-500">{u.email}</div>
+                                </td>
+                                <td className="p-6 text-slate-400 text-xs font-black uppercase tracking-widest">{u.role === 'MARKETER' ? 'خبير تسويق' : 'مؤسسة/عميل'}</td>
+                                <td className="p-6 text-slate-400">{u.date}</td>
+                                <td className="p-6 text-slate-400">{u.activity}</td>
+                                <td className="p-6">
+                                   <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${u.status === 'معتمد' || u.status === 'مفعل' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-orange-500/10 text-orange-400 border border-orange-500/20'}`}>
+                                      {u.status}
+                                   </span>
+                                </td>
+                                <td className="p-6">
+                                   <button className="text-xs font-bold text-secondary hover:underline">إدارة الملف</button>
+                                </td>
+                             </tr>
+                          ))}
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+           </div>
+        )}
+
+        {activeTab === "tasks" && (
+           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                 <div className="p-10 rounded-[3rem] bg-gradient-to-br from-slate-800 to-slate-900 border border-white/5 relative overflow-hidden">
+                    <h3 className="text-2xl font-black text-white mb-2 relative z-10">المشاريع النشطة</h3>
+                    <p className="text-slate-400 mb-6 relative z-10">إجمالي المشاريع الجاري تنفيذها حالياً عبر المنصة.</p>
+                    <p className="text-6xl font-black text-secondary relative z-10">142</p>
+                    <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-secondary/10 blur-3xl rounded-full"></div>
+                 </div>
+                 <div className="p-10 rounded-[3rem] bg-gradient-to-br from-slate-800 to-slate-900 border border-white/5 relative overflow-hidden">
+                    <h3 className="text-2xl font-black text-white mb-2 relative z-10">المشاريع المكتملة</h3>
+                    <p className="text-slate-400 mb-6 relative z-10">المشاريع التي تم تسليمها بنجاح هذا الشهر.</p>
+                    <p className="text-6xl font-black text-emerald-400 relative z-10">384</p>
+                    <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-emerald-500/10 blur-3xl rounded-full"></div>
+                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="p-8 rounded-3xl bg-slate-800/90 border border-white/5 hover:border-white/10 transition-colors">
+                    <div className="flex justify-between items-start mb-4">
+                       <div>
+                          <div className="text-xs font-black text-secondary uppercase tracking-widest mb-1">حملة تسويقية</div>
+                          <h4 className="text-lg font-bold text-white">إطلاق منتج جديد - الربع الثالث</h4>
+                       </div>
+                       <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-bold text-slate-300">قيد التنفيذ</span>
+                    </div>
+                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden mb-6">
+                       <div className="h-full bg-gradient-to-r from-secondary to-accent w-[65%]"></div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm font-bold text-slate-500">
+                       <span>العميل: مجموعة العليان</span>
+                       <span>المسوق: أحمد حسن</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+           </div>
+        )}
+
+        {activeTab === "system" && (
+           <div className="animate-in fade-in slide-in-from-bottom-5 max-w-4xl mx-auto">
+              <div className="p-10 rounded-[3rem] bg-slate-800/90 border border-white/5 shadow-2xl space-y-8">
+                 <div className="flex items-center gap-4 border-b border-white/5 pb-8">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                       <Settings className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                       <h2 className="text-3xl font-black text-white">إعدادات المنصة المتقدمة</h2>
+                       <p className="text-slate-400 font-medium">التحكم في المتغيرات الأساسية للمنصة والنظام المالي.</p>
+                    </div>
+                 </div>
+
+                 <div className="space-y-6">
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group hover:border-white/10 transition-all">
+                       <div>
+                          <h4 className="text-lg font-bold text-white mb-1">عمولة المنصة (Engagement Fee)</h4>
+                          <p className="text-sm text-slate-400">النسبة المقتطعة من كل مشروع مكتمل.</p>
+                       </div>
+                       <div className="flex items-center gap-3">
+                          <input type="number" defaultValue={15} className="w-20 bg-slate-950 border border-white/10 rounded-xl py-2 px-4 text-center text-white font-bold focus:border-secondary outline-none" />
+                          <span className="text-white font-bold">%</span>
+                       </div>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group hover:border-white/10 transition-all">
+                       <div>
+                          <h4 className="text-lg font-bold text-white mb-1">حد السحب الأدنى</h4>
+                          <p className="text-sm text-slate-400">أقل مبلغ يمكن للخبير سحبه من المحفظة.</p>
+                       </div>
+                       <div className="flex items-center gap-3">
+                          <input type="number" defaultValue={50} className="w-24 bg-slate-950 border border-white/10 rounded-xl py-2 px-4 text-center text-white font-bold focus:border-secondary outline-none" />
+                          <span className="text-white font-bold">$</span>
+                       </div>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group hover:border-white/10 transition-all">
+                       <div>
+                          <h4 className="text-lg font-bold text-white mb-1">وضع الصيانة (Maintenance Mode)</h4>
+                          <p className="text-sm text-slate-400">إيقاف تسجيل الدخول والعمليات للمستخدمين الخارجيين.</p>
+                       </div>
+                       <button className="w-12 h-6 bg-slate-800 rounded-full relative cursor-pointer border border-white/5">
+                          <div className="absolute right-1 top-1 w-4 h-4 bg-slate-500 rounded-full"></div>
+                       </button>
+                    </div>
+                 </div>
+
+                 <div className="pt-8 border-t border-white/5 flex justify-end">
+                    <button className="px-8 py-4 bg-secondary text-white font-black rounded-xl shadow-lg shadow-secondary/20 hover:scale-105 active:scale-95 transition-all">
+                       حفظ الإعدادات
+                    </button>
                  </div>
               </div>
            </div>

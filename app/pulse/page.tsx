@@ -97,7 +97,7 @@ export default function PulsePage() {
   };
 
   return (
-    <main className="min-h-screen relative font-sans text-slate-100 overflow-hidden pt-32 selection:bg-secondary/30">
+    <main className="min-h-screen relative font-sans text-slate-100 overflow-x-hidden pt-32 selection:bg-secondary/30">
       <AnimatedBackground />
       <Navbar />
 
@@ -142,7 +142,7 @@ export default function PulsePage() {
 
            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Most Demanded Chart */}
-              <div className="lg:col-span-2 p-8 rounded-[3rem] bg-slate-900/60 backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
+              <div className="lg:col-span-2 p-8 rounded-[3rem] bg-slate-900/60 backdrop-blur-3xl border border-white/5 shadow-2xl relative overflow-x-hidden group">
                  <h3 className="text-xl font-black text-white mb-8">أكثر الخدمات طلباً هذا الأسبوع</h3>
                  <div className="h-64 w-full" dir="ltr">
                     <ResponsiveContainer width="100%" height="100%">
@@ -260,7 +260,7 @@ export default function PulsePage() {
                    animate={{ opacity: 1, scale: 1 }}
                    exit={{ opacity: 0, scale: 0.9 }}
                    transition={{ duration: 0.4 }}
-                   className="group relative flex flex-col p-8 rounded-[3rem] bg-slate-900/40 backdrop-blur-3xl border border-white/5 hover:border-secondary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/10 overflow-hidden"
+                   className="group relative flex flex-col p-8 rounded-[3rem] bg-slate-900/40 backdrop-blur-3xl border border-white/5 hover:border-secondary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/10 overflow-x-hidden"
                  >
                    {/* Category Badge */}
                    <div className="absolute top-8 left-8 z-10">
@@ -272,7 +272,7 @@ export default function PulsePage() {
                    {/* Author Info */}
                    <div className="flex items-center gap-4 mb-8">
                       <Link href={`/marketers/${post.authorId}`} className="relative group/avatar">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-xl font-black text-white shrink-0 shadow-lg relative overflow-hidden">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-xl font-black text-white shrink-0 shadow-lg relative overflow-x-hidden">
                            {post.author.profileImage ? (
                              <img src={post.author.profileImage} alt={post.author.name} className="w-full h-full object-cover" />
                            ) : (
@@ -302,7 +302,7 @@ export default function PulsePage() {
                       </p>
 
                       {post.imageUrl && (
-                         <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/5 shadow-2xl group-hover:scale-[1.02] transition-transform duration-500">
+                         <div className="relative aspect-video rounded-3xl overflow-x-hidden border border-white/5 shadow-2xl group-hover:scale-[1.02] transition-transform duration-500">
                             <img src={post.imageUrl} alt="Portfolio" className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
                             <div className="absolute bottom-4 right-4 flex items-center gap-2">
@@ -352,7 +352,7 @@ export default function PulsePage() {
            initial={{ opacity: 0, y: 50 }}
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
-           className="mt-32 p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/5 text-center relative overflow-hidden shadow-3xl"
+           className="mt-32 p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-white/5 text-center relative overflow-x-hidden shadow-3xl"
         >
            <div className="relative z-10 space-y-10">
               <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight">جاهز لإضافة بصمتك إلى <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">نبض السوق</span>؟</h2>

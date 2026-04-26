@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen relative font-sans text-slate-100 overflow-hidden pt-32 pb-20">
+    <main className="min-h-screen relative font-sans text-slate-100 overflow-x-hidden pt-32 pb-20">
       <AnimatedBackground />
       <Navbar />
       

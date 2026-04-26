@@ -44,7 +44,7 @@ function MarketersContent() {
   }, [serviceFilter]);
 
   return (
-    <main className="min-h-screen relative font-sans text-slate-100 overflow-hidden pt-32 pb-20">
+    <main className="min-h-screen relative font-sans text-slate-100 overflow-x-hidden pt-32 pb-20">
       <AnimatedBackground />
       <Navbar />
 
@@ -77,7 +77,7 @@ function MarketersContent() {
               <div 
                 key={m.id} 
                 onClick={() => router.push(`/marketers/${m.id}`)}
-                className="group p-8 rounded-[2.5rem] bg-[#0b0f1a]/40 backdrop-blur-2xl border border-white/5 hover:border-secondary/30 transition-all duration-300 relative overflow-hidden flex flex-col h-full shadow-2xl cursor-pointer hover:-translate-y-2"
+                className="group p-8 rounded-[2.5rem] bg-[#0b0f1a]/40 backdrop-blur-2xl border border-white/5 hover:border-secondary/30 transition-all duration-300 relative overflow-x-hidden flex flex-col h-full shadow-2xl cursor-pointer hover:-translate-y-2"
               >
                 <div className="flex items-start justify-between mb-8">
                   <div className="w-20 h-20 rounded-3xl bg-slate-900 border-2 border-white/10 flex items-center justify-center text-3xl font-black text-white group-hover:border-secondary transition-colors relative">

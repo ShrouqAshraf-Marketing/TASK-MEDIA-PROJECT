@@ -88,7 +88,7 @@ export default function ClientDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-hidden flex">
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-x-hidden flex">
       <AnimatedBackground />
 
       {/* Sidebar */}
@@ -115,7 +115,7 @@ export default function ClientDashboard() {
             ))}
          </nav>
 
-         <div className="mt-auto p-6 rounded-3xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-white/5 relative overflow-hidden group">
+         <div className="mt-auto p-6 rounded-3xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-white/5 relative overflow-x-hidden group">
             <div className="relative z-10">
                <p className="text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">{t('availableCredits')}</p>
                <h4 className="text-3xl font-black text-white">$12,450.00</h4>
@@ -159,7 +159,7 @@ export default function ClientDashboard() {
                    { label: t('reachDelta'), value: "2.4M", trend: "+18%", icon: TrendingUp, color: "text-secondary" },
                    { label: t('avgCPA'), value: "$12.40", trend: "-2%", icon: Zap, color: "text-accent" },
                  ].map((stat, i) => (
-                   <div key={i} className="p-8 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-2xl border border-white/5 shadow-2xl relative group overflow-hidden">
+                   <div key={i} className="p-8 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-2xl border border-white/5 shadow-2xl relative group overflow-x-hidden">
                       <div className="flex justify-between items-start relative z-10">
                          <div>
                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">{stat.label}</p>
@@ -234,7 +234,7 @@ export default function ClientDashboard() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  {feedPosts.map((post) => (
-                    <div key={post.id} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/5 flex flex-col gap-6 group overflow-hidden relative">
+                    <div key={post.id} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/5 flex flex-col gap-6 group overflow-x-hidden relative">
                        <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center font-black text-secondary">
                              {post.author.name.charAt(0)}
@@ -246,7 +246,7 @@ export default function ClientDashboard() {
                        </div>
                        <p className="text-sm text-slate-300 italic font-medium">"{post.content}"</p>
                        {post.imageUrl && (
-                          <div className="aspect-video rounded-2xl overflow-hidden border border-white/5">
+                          <div className="aspect-video rounded-2xl overflow-x-hidden border border-white/5">
                              <img src={post.imageUrl} className="w-full h-full object-cover" />
                           </div>
                        )}
@@ -300,7 +300,7 @@ export default function ClientDashboard() {
          {showPostModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowPostModal(false)} className="absolute inset-0 bg-[#020617]/90 backdrop-blur-xl" />
-               <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="relative w-full max-w-2xl p-10 rounded-[3rem] bg-slate-900 border border-white/10 shadow-3xl overflow-hidden">
+               <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="relative w-full max-w-2xl p-10 rounded-[3rem] bg-slate-900 border border-white/10 shadow-3xl overflow-x-hidden">
                   <div className="relative z-10">
                      <h3 className="text-3xl font-black text-white mb-2">{t('launchOperation')}</h3>
                      <p className="text-slate-400 font-medium mb-10">{t('howItWorksSub')}</p>

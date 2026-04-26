@@ -20,7 +20,7 @@ export default function LandingPage() {
   const { t } = useLanguage();
 
   return (
-    <main className="min-h-screen relative font-sans text-slate-100 overflow-hidden selection:bg-secondary/30">
+    <main className="min-h-screen relative font-sans text-slate-100 overflow-x-hidden selection:bg-secondary/30">
        <AnimatedBackground />
        <Navbar />
        

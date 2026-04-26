@@ -41,9 +41,10 @@ export default function AnimatedBackground() {
 
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#020617] flex items-center justify-center">
-      {/* Cinematic Ambient Glows */}
-      <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-secondary/15 rounded-full blur-[180px] pointer-events-none animate-pulse-slow" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[900px] h-[900px] bg-accent/15 rounded-full blur-[180px] pointer-events-none animate-pulse-slow-reverse" />
+      {/* Cinematic Ambient Glows (ULTRA-FAST PERFORMANCE: Radial Gradients instead of CSS Blurs) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(110,205,244,0.1)_0%,transparent_70%)] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(240,106,24,0.1)_0%,transparent_70%)] rounded-full pointer-events-none" />
+
       
       {/* Floating Marketing Icons Array */}
       {icons.map((item, i) => {
@@ -70,8 +71,7 @@ export default function AnimatedBackground() {
               style={{
                   position: "absolute",
                   left: item.x,
-                  top: item.y,
-                  filter: "drop-shadow(0 0 10px rgba(255,255,255,0.1))"
+                  top: item.y
               }}
               className="text-white/40 blur-[0.5px] pointer-events-none hidden md:block"
           >

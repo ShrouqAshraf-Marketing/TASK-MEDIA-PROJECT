@@ -112,7 +112,7 @@ export default function MarketerDashboard() {
   const selectedTask = tasks.find(t => t.id === showApplyModal);
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-hidden flex">
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-x-hidden flex">
       <AnimatedBackground />
 
       <AnimatePresence>
@@ -187,7 +187,7 @@ export default function MarketerDashboard() {
                    { label: t('activeOperations'), value: tasks.length.toString(), trend: "New", icon: Briefcase, color: "text-orange-400" },
                    { label: t('efficiencyStatus'), value: "1.2h", trend: "-15m", icon: Clock, color: "text-accent" },
                  ].map((stat, i) => (
-                   <div key={i} className="p-6 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-2xl border border-white/5 shadow-2xl relative group overflow-hidden">
+                   <div key={i} className="p-6 rounded-[2.5rem] bg-slate-900/40 backdrop-blur-2xl border border-white/5 shadow-2xl relative group overflow-x-hidden">
                       <div className="flex justify-between items-start relative z-10">
                          <div>
                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">{stat.label}</p>
@@ -238,7 +238,7 @@ export default function MarketerDashboard() {
                     <div className="col-span-2 py-40 text-center animate-pulse text-slate-600 font-black uppercase tracking-widest text-sm italic">{t('syncData')}</div>
                  ) : tasks.length > 0 ? (
                     tasks.map((task) => (
-                      <div key={task.id} className="p-8 rounded-[2.5rem] bg-slate-900/60 border border-white/10 hover:border-orange-500/30 transition-all group relative overflow-hidden">
+                      <div key={task.id} className="p-8 rounded-[2.5rem] bg-slate-900/60 border border-white/10 hover:border-orange-500/30 transition-all group relative overflow-x-hidden">
                          <div className="relative z-10">
                             <div className="flex justify-between items-start mb-6">
                                <div className="flex flex-col gap-2">
@@ -292,7 +292,7 @@ export default function MarketerDashboard() {
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {feedPosts.map((post) => (
-                     <div key={post.id} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/5 flex flex-col gap-6 group overflow-hidden relative">
+                     <div key={post.id} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/5 flex flex-col gap-6 group overflow-x-hidden relative">
                         <div className="flex items-center gap-3">
                            <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center font-black text-orange-400">
                               {post.author.name.charAt(0)}
@@ -304,7 +304,7 @@ export default function MarketerDashboard() {
                         </div>
                         <p className="text-sm text-slate-300 italic font-medium">"{post.content}"</p>
                         {post.imageUrl && (
-                           <div className="aspect-video rounded-2xl overflow-hidden border border-white/5">
+                           <div className="aspect-video rounded-2xl overflow-x-hidden border border-white/5">
                               <img src={post.imageUrl} className="w-full h-full object-cover" />
                            </div>
                         )}
@@ -324,7 +324,7 @@ export default function MarketerDashboard() {
                  </div>
               </div>
 
-              <div className="bg-slate-900/60 border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
+              <div className="bg-slate-900/60 border border-white/5 rounded-[3rem] overflow-x-hidden shadow-2xl">
                  <div className="overflow-x-auto">
                     <table className="w-full text-left rtl:text-right">
                        <thead className="bg-white/5 text-slate-400 font-bold uppercase tracking-widest text-[10px]">

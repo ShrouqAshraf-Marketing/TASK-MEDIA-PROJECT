@@ -8,7 +8,8 @@ import {
   Star, MapPin, Globe, Share2, 
   Users, Mail, ShieldCheck, Award, 
   TrendingUp, Briefcase, Zap, Download,
-  MessageSquare, FileText, X, Clock
+  MessageSquare, FileText, X, Clock,
+  CreditCard, Wallet, Phone, MessageCircle
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
@@ -182,6 +183,85 @@ export default function MarketerProfilePage({ params }: { params: Promise<{ id: 
            <div className="absolute -left-20 -top-20 w-80 h-80 bg-secondary/10 blur-[120px] rounded-full" />
            <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-accent/10 blur-[120px] rounded-full" />
         </motion.div>
+
+        {/* Communication & Payment Methods */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12" dir="rtl">
+           <div className="p-8 rounded-[3rem] bg-slate-900/60 border border-white/5 flex flex-col gap-6 shadow-2xl">
+              <div className="flex items-center gap-4 border-b border-white/5 pb-4">
+                 <div className="p-4 rounded-2xl bg-secondary/20 text-secondary">
+                    <MessageCircle className="w-8 h-8" />
+                 </div>
+                 <h3 className="text-2xl font-black text-white">طرق التواصل المتاحة</h3>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3">
+                    <Mail className="w-6 h-6 text-slate-400" />
+                    <div>
+                       <p className="text-xs text-slate-500 font-bold uppercase">البريد الإلكتروني</p>
+                       <p className="text-sm text-white font-bold truncate max-w-[150px]">{marketer.email || 'contact@example.com'}</p>
+                    </div>
+                 </div>
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3">
+                    <Phone className="w-6 h-6 text-slate-400" />
+                    <div>
+                       <p className="text-xs text-slate-500 font-bold uppercase">رقم الهاتف</p>
+                       <p className="text-sm text-white font-bold" dir="ltr">+971 50 123 4567</p>
+                    </div>
+                 </div>
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3">
+                    <MessageSquare className="w-6 h-6 text-slate-400" />
+                    <div>
+                       <p className="text-xs text-slate-500 font-bold uppercase">المحادثة المباشرة</p>
+                       <button onClick={handleConsult} className="text-sm text-secondary font-bold hover:underline">بدء محادثة</button>
+                    </div>
+                 </div>
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3">
+                    <Globe className="w-6 h-6 text-slate-400" />
+                    <div>
+                       <p className="text-xs text-slate-500 font-bold uppercase">الموقع الشخصي</p>
+                       <p className="text-sm text-white font-bold cursor-pointer hover:text-secondary transition-colors truncate max-w-[150px]" dir="ltr">www.expert.com</p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+
+           <div className="p-8 rounded-[3rem] bg-slate-900/60 border border-white/5 flex flex-col gap-6 shadow-2xl">
+              <div className="flex items-center gap-4 border-b border-white/5 pb-4">
+                 <div className="p-4 rounded-2xl bg-accent/20 text-accent">
+                    <CreditCard className="w-8 h-8" />
+                 </div>
+                 <h3 className="text-2xl font-black text-white">طرق الدفع المعتمدة</h3>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3">
+                    <CreditCard className="w-6 h-6 text-slate-400" />
+                    <div>
+                       <p className="text-sm text-white font-bold">البطاقات الائتمانية</p>
+                       <p className="text-xs text-slate-500 font-bold">Visa, MasterCard</p>
+                    </div>
+                 </div>
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3">
+                    <Wallet className="w-6 h-6 text-slate-400" />
+                    <div>
+                       <p className="text-sm text-white font-bold">المحفظة الرقمية</p>
+                       <p className="text-xs text-slate-500 font-bold">رصيد المنصة</p>
+                    </div>
+                 </div>
+                 <div className="p-4 rounded-2xl bg-white/5 flex items-center gap-3 sm:col-span-2">
+                    <ShieldCheck className="w-6 h-6 text-emerald-400" />
+                    <div>
+                       <p className="text-sm text-white font-bold">دفع آمن ومضمون</p>
+                       <p className="text-xs text-slate-500 font-bold">جميع المعاملات المالية محمية ومضمونة من قبل المنصة.</p>
+                    </div>
+                 </div>
+              </div>
+              <div className="mt-auto pt-4">
+                  <Link href="/checkout" className="block w-full py-4 bg-accent/10 border border-accent/20 text-accent text-center font-black rounded-xl hover:bg-accent hover:text-white transition-all">
+                     المتابعة للدفع
+                  </Link>
+              </div>
+           </div>
+        </section>
 
          {/* Success Stories Gallery */}
         <section className="space-y-12">

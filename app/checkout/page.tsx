@@ -10,14 +10,17 @@ import {
 import Link from "next/link";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import { useLanguage } from "@/components/LanguageContext";
+import { useToast } from "@/components/ToastContext";
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get("plan");
   const marketerId = searchParams.get("marketer");
   const { t } = useLanguage();
+  const { showToast } = useToast();
   
   const [submitted, setSubmitted] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,12 +28,13 @@ function CheckoutContent() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
+      showToast(`تم تأكيد عملية الدفع بنجاح عبر ${paymentMethod === 'card' ? 'البطاقة' : 'المحفظة'}! مرحباً بك.`, "success");
       setSubmitted(true);
     }, 2000);
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-hidden flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-x-hidden flex items-center justify-center p-6">
       <AnimatedBackground />
 
       <Link href="/" className="absolute top-8 left-8 flex items-center gap-2 text-slate-400 font-bold hover:text-white transition-colors bg-slate-900/50 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md z-20">
@@ -51,7 +55,7 @@ function CheckoutContent() {
               <p className="text-slate-400 font-medium">{t('activatePlan')}</p>
            </div>
 
-           <div className="p-8 rounded-[2.5rem] bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl relative overflow-hidden">
+           <div className="p-8 rounded-[2.5rem] bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl relative overflow-x-hidden">
               <div className="relative z-10">
                  <div className="flex items-center justify-between mb-8">
                     <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">{t('selectedSolution')}</span>
@@ -118,13 +122,19 @@ function CheckoutContent() {
                       <div className="space-y-1.5">
                          <label className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">طريقة الدفع</label>
                          <div className="grid grid-cols-2 gap-3">
-                            <div className="p-4 rounded-xl border border-secondary bg-secondary/10 flex flex-col items-center gap-2 cursor-pointer transition-all">
-                               <CreditCard className="w-5 h-5 text-secondary" />
-                               <span className="text-[10px] font-black text-white tracking-widest uppercase">بطاقة</span>
+                            <div 
+                              onClick={() => setPaymentMethod('card')}
+                              className={`p-4 rounded-xl border flex flex-col items-center gap-2 cursor-pointer transition-all ${paymentMethod === 'card' ? 'border-secondary bg-secondary/10' : 'border-white/5 bg-white/5 hover:border-white/20 opacity-50'}`}
+                            >
+                               <CreditCard className={`w-5 h-5 ${paymentMethod === 'card' ? 'text-secondary' : 'text-slate-500'}`} />
+                               <span className={`text-[10px] font-black tracking-widest uppercase ${paymentMethod === 'card' ? 'text-white' : 'text-slate-500'}`}>بطاقة</span>
                             </div>
-                            <div className="p-4 rounded-xl border border-white/5 bg-white/5 flex flex-col items-center gap-2 cursor-pointer hover:border-white/20 transition-all opacity-50">
-                               <div className="w-5 h-5 rounded-full border-2 border-slate-500"></div>
-                               <span className="text-[10px] font-black text-slate-500 tracking-widest uppercase">محفظة</span>
+                            <div 
+                              onClick={() => setPaymentMethod('wallet')}
+                              className={`p-4 rounded-xl border flex flex-col items-center gap-2 cursor-pointer transition-all ${paymentMethod === 'wallet' ? 'border-emerald-500 bg-emerald-500/10' : 'border-white/5 bg-white/5 hover:border-white/20 opacity-50'}`}
+                            >
+                               <div className={`w-5 h-5 rounded-full border-2 ${paymentMethod === 'wallet' ? 'border-emerald-500' : 'border-slate-500'}`}></div>
+                               <span className={`text-[10px] font-black tracking-widest uppercase ${paymentMethod === 'wallet' ? 'text-white' : 'text-slate-500'}`}>محفظة المنصة</span>
                             </div>
                          </div>
                       </div>

@@ -9,11 +9,11 @@ export default function NotificationDropdown() {
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([
-    { id: 1, title: "Mission Intelligence", body: "An elite agent has proposed to your 'SEO Dominance' mission.", time: "2m ago", type: "mission", read: false },
-    { id: 2, title: "Market Pulse Alert", body: "A new strategic inquiry for 'Arabic Content Architecture' was just broadcasted.", time: "45m ago", type: "system", read: false },
-    { id: 3, title: "Transaction Authorized", body: "Milestone payment for 'Social Strike' has been released to your ledger.", time: "1h ago", type: "payment", read: true },
-    { id: 4, title: "ROI Anomaly", body: "A 40% growth spike detected in your active Real Estate Ads campaign.", time: "2h ago", type: "mission", read: true },
-    { id: 5, title: "Nexus Boost", body: "Your expert profile visibility was increased by 25% due to high engagement.", time: "5h ago", type: "system", read: true },
+    { id: 1, title: "مهمة استراتيجية جديدة", body: "قام خبير معتمد بتقديم عرض على مشروعك 'تصدر محركات البحث'.", time: "منذ دقيقتين", type: "mission", read: false },
+    { id: 2, title: "تنبيه نبض السوق", body: "تم نشر استفسار جديد بخصوص 'هندسة المحتوى العربي'.", time: "منذ 45 دقيقة", type: "system", read: false },
+    { id: 3, title: "عملية دفع مؤكدة", body: "تم تحويل الدفعة الخاصة بمشروع 'التسويق عبر السوشيال ميديا' إلى سجلك المالي.", time: "منذ ساعة", type: "payment", read: true },
+    { id: 4, title: "ارتفاع في العائد (ROI)", body: "تم رصد قفزة نمو بنسبة 40% في حملتك الإعلانية للعقارات.", time: "منذ ساعتين", type: "mission", read: true },
+    { id: 5, title: "ترقية الحساب", body: "تمت زيادة ظهور ملفك الشخصي بنسبة 25% نظراً لتقييماتك الممتازة.", time: "منذ 5 ساعات", type: "system", read: true },
   ]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -48,13 +48,13 @@ export default function NotificationDropdown() {
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               className="absolute top-16 right-0 w-80 bg-slate-900/90 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-3xl z-[70] overflow-hidden"
             >
-              <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-                <span className="text-xs font-black uppercase tracking-widest text-white">{t('dashboard')} Alerts</span>
+              <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5 flex-row-reverse">
+                <span className="text-xs font-black uppercase tracking-widest text-white">إشعارات النظام</span>
                 <button 
                   onClick={markAllRead}
                   className="text-[10px] text-secondary font-bold hover:underline"
                 >
-                  Mark all read
+                  تحديد الكل كمقروء
                 </button>
               </div>
 
@@ -67,7 +67,7 @@ export default function NotificationDropdown() {
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${n.type === 'mission' ? 'bg-secondary/10 text-secondary' : n.type === 'payment' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-blue-500/10 text-blue-400'}`}>
                           {n.type === 'mission' ? <Target className="w-4 h-4" /> : n.type === 'payment' ? <DollarSign className="w-4 h-4" /> : <Info className="w-4 h-4" />}
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 text-right w-full">
                           <h5 className="text-xs font-bold text-white mb-0.5 truncate">{n.title}</h5>
                           <p className="text-[11px] text-slate-400 leading-tight mb-1 line-clamp-2">{n.body}</p>
                           <span className="text-[9px] font-black uppercase text-slate-600 tracking-tighter">{n.time}</span>
@@ -78,7 +78,7 @@ export default function NotificationDropdown() {
                 ) : (
                   <div className="p-12 text-center">
                     <CheckCircle2 className="w-8 h-8 text-slate-700 mx-auto mb-3" />
-                    <p className="text-xs font-medium text-slate-500">No active alerts</p>
+                    <p className="text-xs font-medium text-slate-500">لا توجد إشعارات حالية</p>
                   </div>
                 )}
               </div>
@@ -87,9 +87,9 @@ export default function NotificationDropdown() {
                 <div className="p-3 text-center bg-white/5">
                   <button 
                     onClick={clearAll}
-                    className="text-[10px] font-black uppercase text-slate-400 hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto"
+                    className="text-[10px] font-black uppercase text-slate-400 hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto flex-row-reverse"
                   >
-                    <Trash2 className="w-3 h-3" /> Purge Feed
+                    <Trash2 className="w-3 h-3" /> مسح الإشعارات
                   </button>
                 </div>
               )}

@@ -27,7 +27,7 @@ export default function MarketerTicker() {
       <motion.div
         animate={{ x: ["0%", "-33.33%"] }} 
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="flex shrink-0 gap-10 items-center px-4"
+        className="flex shrink-0 gap-10 items-center px-4 will-change-transform"
         dir="ltr"
       >
         {/* Triplicating array for smooth infinite scrolling */}
