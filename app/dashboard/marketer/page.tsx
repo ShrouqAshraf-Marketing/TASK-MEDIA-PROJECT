@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  BarChart3, Briefcase, DollarSign, Package, Star,
   Settings, Clock, TrendingUp, ChevronRight, Zap, Target, Send, CheckCircle2, X, LayoutGrid, Share2, Menu
 } from "lucide-react";
 import dynamic from "next/dynamic";
