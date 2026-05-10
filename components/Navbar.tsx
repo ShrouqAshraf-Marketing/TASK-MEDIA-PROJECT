@@ -16,14 +16,36 @@ export default function Navbar() {
       <div className="max-w-[90rem] mx-auto px-4 h-16 lg:h-20 flex items-center justify-between gap-4">
         
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center shrink-0 group">
-          <div className="flex items-center gap-2.5">
-             <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-slate-900 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform duration-300 border border-orange-500/30">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-             </div>
-             <span className="text-xl lg:text-2xl font-black text-slate-100 tracking-tight">TASK<span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">MEDIA</span></span>
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative w-10 h-10 flex items-center justify-center">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 drop-shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
+              {/* Top Layer */}
+              <path d="M50 15 L85 35 L50 55 L15 35 L50 15Z" fill="url(#layer1)" />
+              {/* Middle Layer */}
+              <path d="M15 45 L50 65 L85 45 L85 57 L50 77 L15 57 Z" fill="url(#layer2)" />
+              {/* Bottom Layer */}
+              <path d="M15 67 L50 87 L85 67 L85 79 L50 99 L15 79 Z" fill="url(#layer3)" />
+              <defs>
+                <linearGradient id="layer1" x1="15" y1="15" x2="85" y2="55">
+                  <stop stopColor="#60A5FA" />
+                  <stop offset="1" stopColor="#2563EB" />
+                </linearGradient>
+                <linearGradient id="layer2" x1="15" y1="45" x2="85" y2="77">
+                  <stop stopColor="#A78BFA" />
+                  <stop offset="1" stopColor="#7C3AED" />
+                </linearGradient>
+                <linearGradient id="layer3" x1="15" y1="67" x2="85" y2="99">
+                  <stop stopColor="#F472B6" />
+                  <stop offset="1" stopColor="#E11D48" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div className="flex flex-col justify-center">
+            <span className="text-2xl font-black tracking-tight text-white leading-none">
+              تاسك ميديا
+            </span>
+            <span className="text-xs text-slate-400 font-medium mt-1">منصة تسويق إلكتروني</span>
           </div>
         </Link>
         

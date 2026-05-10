@@ -23,14 +23,37 @@ function CheckoutContent() {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const amount = plan === 'pro-matrix' ? 1500 : plan === 'starter' ? 850 : 0;
+
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          paymentMethod,
+          plan: plan || "custom",
+          amount
+        })
+      });
+
+      if (!res.ok) throw new Error("Payment failed");
+
       showToast(`تم تأكيد عملية الدفع بنجاح عبر ${paymentMethod === 'card' ? 'البطاقة' : 'المحفظة'}! مرحباً بك.`, "success");
       setSubmitted(true);
-    }, 2000);
+    } catch (err) {
+      showToast("حدث خطأ أثناء معالجة الدفع", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -113,11 +136,11 @@ function CheckoutContent() {
                    <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="space-y-1.5">
                          <label className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">الاسم الكامل</label>
-                         <input required type="text" placeholder="الاسم" className="w-full bg-slate-950/50 border border-white/10 text-white rounded-xl py-4 px-5 focus:outline-none focus:border-secondary transition-all" />
+                         <input name="name" required type="text" placeholder="الاسم" className="w-full bg-slate-950/50 border border-white/10 text-white rounded-xl py-4 px-5 focus:outline-none focus:border-secondary transition-all" />
                       </div>
                       <div className="space-y-1.5">
                          <label className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">البريد الإلكتروني</label>
-                         <input required type="email" placeholder="email@example.com" className="w-full bg-slate-950/50 border border-white/10 text-white rounded-xl py-4 px-5 focus:outline-none focus:border-secondary transition-all" />
+                         <input name="email" required type="email" placeholder="email@example.com" className="w-full bg-slate-950/50 border border-white/10 text-white rounded-xl py-4 px-5 focus:outline-none focus:border-secondary transition-all" />
                       </div>
                       <div className="space-y-1.5">
                          <label className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">طريقة الدفع</label>

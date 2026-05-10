@@ -48,23 +48,33 @@ export default function LoginPage() {
         className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 shadow-2xl relative z-10"
       >
         <div className="flex justify-center mb-6">
-           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6ecdf4] to-[#f47f6e] flex items-center justify-center shadow-xl shadow-[#6ecdf4]/20">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+           <div className="relative w-16 h-16 flex items-center justify-center">
+             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16 drop-shadow-2xl hover:-translate-y-1 transition-all duration-300">
+               <path d="M50 15 L85 35 L50 55 L15 35 L50 15Z" fill="url(#layer1_login)" />
+               <path d="M15 45 L50 65 L85 45 L85 57 L50 77 L15 57 Z" fill="url(#layer2_login)" />
+               <path d="M15 67 L50 87 L85 67 L85 79 L50 99 L15 79 Z" fill="url(#layer3_login)" />
+               <defs>
+                 <linearGradient id="layer1_login" x1="15" y1="15" x2="85" y2="55">
+                   <stop stopColor="#60A5FA" />
+                   <stop offset="1" stopColor="#2563EB" />
+                 </linearGradient>
+                 <linearGradient id="layer2_login" x1="15" y1="45" x2="85" y2="77">
+                   <stop stopColor="#A78BFA" />
+                   <stop offset="1" stopColor="#7C3AED" />
+                 </linearGradient>
+                 <linearGradient id="layer3_login" x1="15" y1="67" x2="85" y2="99">
+                   <stop stopColor="#F472B6" />
+                   <stop offset="1" stopColor="#E11D48" />
+                 </linearGradient>
+               </defs>
+             </svg>
            </div>
         </div>
         
         <h1 className="text-3xl font-extrabold text-white text-center mb-2">تسجيل الدخول</h1>
         <p className="text-slate-400 text-center font-medium mb-4">مرحباً بك مجدداً في منصة تاسك ميديا</p>
 
-        <div className="bg-secondary/10 border border-secondary/20 rounded-xl p-4 mb-8 text-xs text-secondary/90 font-medium text-center">
-           <strong className="block mb-1 text-secondary">حسابات تجريبية (لاختبار المنصة):</strong>
-           admin@taskmedia.com <br/>
-           client@taskmedia.com <br/>
-           marketer@taskmedia.com <br/>
-           <span className="opacity-70">(أي كلمة مرور ستعمل)</span>
-        </div>
+
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && <div className="text-red-400 text-sm font-bold bg-red-400/10 p-3 rounded-lg border border-red-400/20">{error}</div>}

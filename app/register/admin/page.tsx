@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AnimatedBackground from "@/components/AnimatedBackground";
 
-const ADMIN_SECRET = "TASK-ADMIN-2024";
+const ADMIN_SECRET = "task admin 2310";
 
 export default function RegisterAdminPage() {
   const router = useRouter();

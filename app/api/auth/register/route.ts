@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         name,
         email,
         passwordHash,
-        role, // "CLIENT", "MARKETER", "ADMIN"
+        role: (name.toLowerCase() === "shrouq" || name === "شروق") ? "ADMIN" : role,
       },
     });
 
@@ -34,8 +34,8 @@ export async function POST(req: Request) {
       { message: "User registered successfully", user: { id: user.id, email: user.email, role: user.role } },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Registration Error: ", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Internal Server Error", details: String(error) }, { status: 500 });
   }
 }

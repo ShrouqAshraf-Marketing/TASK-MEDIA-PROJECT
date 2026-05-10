@@ -21,6 +21,29 @@ export default function RegisterSelection() {
 
       <div className="max-w-5xl w-full mx-auto relative z-10 text-center">
          <div className="text-center space-y-6 max-w-2xl mx-auto mb-20 relative z-20">
+             <div className="flex justify-center mb-2">
+               <div className="relative w-20 h-20 flex items-center justify-center">
+                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 drop-shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                   <path d="M50 15 L85 35 L50 55 L15 35 L50 15Z" fill="url(#layer1_reg)" />
+                   <path d="M15 45 L50 65 L85 45 L85 57 L50 77 L15 57 Z" fill="url(#layer2_reg)" />
+                   <path d="M15 67 L50 87 L85 67 L85 79 L50 99 L15 79 Z" fill="url(#layer3_reg)" />
+                   <defs>
+                     <linearGradient id="layer1_reg" x1="15" y1="15" x2="85" y2="55">
+                       <stop stopColor="#60A5FA" />
+                       <stop offset="1" stopColor="#2563EB" />
+                     </linearGradient>
+                     <linearGradient id="layer2_reg" x1="15" y1="45" x2="85" y2="77">
+                       <stop stopColor="#A78BFA" />
+                       <stop offset="1" stopColor="#7C3AED" />
+                     </linearGradient>
+                     <linearGradient id="layer3_reg" x1="15" y1="67" x2="85" y2="99">
+                       <stop stopColor="#F472B6" />
+                       <stop offset="1" stopColor="#E11D48" />
+                     </linearGradient>
+                   </defs>
+                 </svg>
+               </div>
+             </div>
              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-secondary/30 bg-secondary/10 text-secondary shadow-[0_0_20px_rgba(110,205,244,0.15)]">
                 <ShieldCheck className="w-4 h-4" />
                 <span className="text-sm font-bold tracking-wide uppercase">التسجيل الموحد</span>

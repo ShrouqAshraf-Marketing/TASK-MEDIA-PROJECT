@@ -134,7 +134,7 @@ export default function ClientDashboard() {
       <main className="flex-1 p-10 relative z-10 overflow-y-auto">
          <header className="flex justify-between items-start mb-12">
             <div>
-               <h2 className="text-4xl font-black text-white mb-2">{t('welcomeBack')}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">{session?.user?.name?.split(' ')[0] || "Strategist"}</span></h2>
+               <h2 className="text-4xl font-black text-white mb-2">مرحباً بك يا <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">{session?.user?.name?.split(' ')[0] || "Strategist"}</span></h2>
                <p className="text-slate-400 font-medium">{t('heroTag')}</p>
             </div>
             <div className="flex gap-4">
