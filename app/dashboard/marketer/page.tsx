@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  BarChart3, Briefcase, DollarSign, Package, Star,
-  Settings, Clock, TrendingUp, ChevronRight, Zap, Target, Send, CheckCircle2, X, LayoutGrid, Share2
+  Settings, Clock, TrendingUp, ChevronRight, Zap, Target, Send, CheckCircle2, X, LayoutGrid, Share2, Menu
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -40,6 +39,7 @@ export default function MarketerDashboard() {
   const [proposalData, setProposalData] = useState({ pitch: "", price: "" });
   const [submitting, setSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [transactions, setTransactions] = useState<any[]>([]);
 
@@ -124,23 +124,39 @@ export default function MarketerDashboard() {
          )}
       </AnimatePresence>
 
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-[#020617]/80 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-80 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl p-8 flex flex-col gap-10 sticky top-0 h-screen z-20">
-         <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-accent flex items-center justify-center shadow-lg shadow-accent/20">
-               <Zap className="w-6 h-6 text-white" />
+      <aside className={`fixed lg:sticky top-0 right-0 h-screen z-50 w-72 lg:w-80 border-l border-white/5 bg-slate-900/95 lg:bg-slate-900/40 backdrop-blur-3xl p-6 lg:p-8 flex flex-col gap-8 transition-transform duration-300 overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}>
+         <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-accent flex items-center justify-center shadow-lg shadow-accent/20">
+                  <Zap className="w-6 h-6 text-white" />
+               </div>
+               <div>
+                  <h1 className="text-2xl font-black text-white tracking-tighter">Task<span className="text-accent">Media</span></h1>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{t('marketerLogin')} {t('dashboard')}</span>
+               </div>
             </div>
-            <div>
-               <h1 className="text-2xl font-black text-white tracking-tighter">Task<span className="text-accent">Media</span></h1>
-               <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{t('marketerLogin')} {t('dashboard')}</span>
-            </div>
+            <button className="lg:hidden p-2 text-slate-400 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+               <X className="w-6 h-6" />
+            </button>
          </div>
 
          <nav className="flex flex-col gap-2">
             {sidebarItems.map((item) => (
               <button 
                 key={item.key}
-                onClick={() => setActiveTab(item.key)}
+                onClick={() => {
+                  setActiveTab(item.key);
+                  setIsMobileMenuOpen(false);
+                }}
                 className={`flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all duration-300 ${activeTab === item.key ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-lg shadow-orange-500/5' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
               >
                 {item.icon} {item.label}
@@ -160,16 +176,24 @@ export default function MarketerDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-10 relative z-10 overflow-y-auto">
-         <header className="flex justify-between items-start mb-12">
-            <div>
-               <h2 className="text-4xl font-black text-white mb-2">مرحباً بك يا <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-accent">{session?.user?.name?.split(' ')[0]}</span></h2>
-               <p className="text-slate-400 font-medium">Monitoring platform flow. 3 active insight distributions in progress.</p>
+      <main className="flex-1 p-4 md:p-10 relative z-10 overflow-y-auto w-full">
+         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+            <div className="flex items-center gap-4 w-full md:w-auto justify-between">
+               <div>
+                  <h2 className="text-3xl md:text-4xl font-black text-white mb-2">مرحباً بك يا <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-accent">{session?.user?.name?.split(' ')[0]}</span></h2>
+                  <p className="text-slate-400 font-medium text-sm md:text-base">Monitoring platform flow. 3 active insight distributions in progress.</p>
+               </div>
+               <button 
+                 onClick={() => setIsMobileMenuOpen(true)}
+                 className="lg:hidden p-3 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all shrink-0"
+               >
+                 <Menu className="w-6 h-6" />
+               </button>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-4 w-full md:w-auto">
                <button 
                 onClick={() => { setEditingPost(null); setShowPulseModal(true); }}
-                className="px-6 py-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl font-black text-orange-400 hover:bg-orange-500/20 transition-all flex items-center gap-3">
+                className="flex-1 md:flex-none justify-center px-4 md:px-6 py-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl font-black text-orange-400 hover:bg-orange-500/20 transition-all flex items-center gap-3 text-sm md:text-base">
                  <Share2 className="w-5 h-5" /> {t('sharePortfolio')}
                </button>
                <div className="px-6 py-3 rounded-2xl bg-white/5 border border-white/5 flex flex-col items-end">

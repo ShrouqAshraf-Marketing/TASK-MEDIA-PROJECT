@@ -6,7 +6,7 @@ import {
   Plus, Briefcase, 
   MessageSquare, UserCircle, Settings,
   TrendingUp, DollarSign, Send,
-  Target, Zap, Clock, X, LayoutGrid, Share2
+  Target, Zap, Clock, X, LayoutGrid, Share2, Menu
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -25,6 +25,7 @@ export default function ClientDashboard() {
   const [feedPosts, setFeedPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -92,23 +93,39 @@ export default function ClientDashboard() {
     <div className="min-h-screen bg-[#020617] text-slate-100 font-sans relative overflow-x-hidden flex">
       <AnimatedBackground />
 
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-[#020617]/80 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-80 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl p-8 flex flex-col gap-10 sticky top-0 h-screen z-20">
-         <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-lg shadow-secondary/20">
-               <Zap className="w-6 h-6 text-white" />
+      <aside className={`fixed lg:sticky top-0 right-0 h-screen z-50 w-72 lg:w-80 border-l border-white/5 bg-slate-900/95 lg:bg-slate-900/40 backdrop-blur-3xl p-6 lg:p-8 flex flex-col gap-8 transition-transform duration-300 overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'}`}>
+         <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-lg shadow-secondary/20">
+                  <Zap className="w-6 h-6 text-white" />
+               </div>
+               <div>
+                  <h1 className="text-2xl font-black text-white tracking-tighter">Task<span className="text-secondary">Media</span></h1>
+                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{t('dashboard')}</span>
+               </div>
             </div>
-            <div>
-               <h1 className="text-2xl font-black text-white tracking-tighter">Task<span className="text-secondary">Media</span></h1>
-               <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{t('dashboard')}</span>
-            </div>
+            <button className="lg:hidden p-2 text-slate-400 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+               <X className="w-6 h-6" />
+            </button>
          </div>
 
          <nav className="flex flex-col gap-2">
             {navItems.map((item) => (
               <button 
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => {
+                  setActiveTab(item.id);
+                  setIsMobileMenuOpen(false);
+                }}
                 className={`flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all duration-300 ${activeTab === item.id ? 'bg-secondary/10 text-secondary border border-secondary/20 shadow-lg shadow-secondary/5' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}
               >
                 <item.icon className="w-5 h-5" /> {item.name}
@@ -132,16 +149,24 @@ export default function ClientDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-10 relative z-10 overflow-y-auto">
-         <header className="flex justify-between items-start mb-12">
-            <div>
-               <h2 className="text-4xl font-black text-white mb-2">مرحباً بك يا <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">{session?.user?.name?.split(' ')[0] || "Strategist"}</span></h2>
-               <p className="text-slate-400 font-medium">{t('heroTag')}</p>
+      <main className="flex-1 p-4 md:p-10 relative z-10 overflow-y-auto w-full">
+         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+            <div className="flex items-center gap-4 w-full md:w-auto justify-between">
+               <div>
+                  <h2 className="text-3xl md:text-4xl font-black text-white mb-2">مرحباً بك يا <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent">{session?.user?.name?.split(' ')[0] || "Strategist"}</span></h2>
+                  <p className="text-slate-400 font-medium text-sm md:text-base">{t('heroTag')}</p>
+               </div>
+               <button 
+                 onClick={() => setIsMobileMenuOpen(true)}
+                 className="lg:hidden p-3 bg-white/5 border border-white/10 rounded-2xl text-white hover:bg-white/10 transition-all shrink-0"
+               >
+                 <Menu className="w-6 h-6" />
+               </button>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 w-full md:w-auto">
               <button 
                 onClick={() => { setEditingPost(null); setShowPulseModal(true); }}
-                className="px-6 py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-white hover:bg-white/10 transition-all flex items-center gap-3">
+                className="flex-1 md:flex-none px-4 md:px-6 py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-white hover:bg-white/10 transition-all flex items-center justify-center gap-3 text-sm md:text-base">
                  <Share2 className="w-5 h-5 text-secondary" /> {t('shareInsight')}
               </button>
               <button 

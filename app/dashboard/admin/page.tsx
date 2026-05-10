@@ -386,13 +386,13 @@ export default function AdminDashboard() {
             <p className="text-slate-400 font-medium mt-1">الحالة: <span className="text-emerald-400">جميع الأنظمة تعمل بكفاءة</span></p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="relative">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="relative flex-1 md:flex-none">
               <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-500" />
               <input
                 type="text"
                 placeholder="البحث في النظام..."
-                className="bg-slate-800/80 border border-white/5 rounded-xl py-2.5 pr-10 pl-4 text-sm outline-none focus:border-secondary transition-all w-64 text-right"
+                className="bg-slate-800/80 border border-white/5 rounded-xl py-2.5 pr-10 pl-4 text-sm outline-none focus:border-secondary transition-all w-full md:w-64 text-right"
               />
             </div>
             <button onClick={() => showToast("تم تطبيق الفلاتر بنجاح", "success")} className="p-2.5 rounded-xl bg-slate-800/80 border border-white/5 text-slate-400 hover:text-white transition-colors">
@@ -405,7 +405,7 @@ export default function AdminDashboard() {
               </button>
               <AnimatePresence>
                 {showNotifications && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute left-0 mt-2 w-80 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden text-right">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="fixed left-4 right-4 top-40 md:absolute md:inset-auto md:left-0 md:top-full md:mt-2 md:w-80 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden text-right">
                     <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
                       <span className="font-bold text-white">الإشعارات</span>
                       <button onClick={() => setNotifications(notifications.map(n => ({...n, unread: false})))} className="text-xs text-secondary hover:underline">تحديد كـ مقروء</button>
