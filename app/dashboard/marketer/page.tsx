@@ -36,6 +36,7 @@ export default function MarketerDashboard() {
   const [loading, setLoading] = useState(true);
   const [showApplyModal, setShowApplyModal] = useState<string | null>(null);
   const [showPulseModal, setShowPulseModal] = useState(false);
+  const [editingPost, setEditingPost] = useState<any>(null);
   const [proposalData, setProposalData] = useState({ pitch: "", price: "" });
   const [submitting, setSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -167,7 +168,7 @@ export default function MarketerDashboard() {
             </div>
             <div className="flex items-center gap-4">
                <button 
-                onClick={() => setShowPulseModal(true)}
+                onClick={() => { setEditingPost(null); setShowPulseModal(true); }}
                 className="px-6 py-4 bg-orange-500/10 border border-orange-500/20 rounded-2xl font-black text-orange-400 hover:bg-orange-500/20 transition-all flex items-center gap-3">
                  <Share2 className="w-5 h-5" /> {t('sharePortfolio')}
                </button>
@@ -293,14 +294,24 @@ export default function MarketerDashboard() {
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {feedPosts.map((post) => (
                      <div key={post.id} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/5 flex flex-col gap-6 group overflow-x-hidden relative">
-                        <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center font-black text-orange-400">
-                              {post.author.name.charAt(0)}
+                        <div className="flex items-center justify-between">
+                           <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center font-black text-orange-400">
+                                 {post.author.name.charAt(0)}
+                              </div>
+                              <div>
+                                 <h4 className="text-sm font-black text-white">{post.author.name}</h4>
+                                 <p className="text-[10px] text-slate-500 uppercase font-black">{post.type}</p>
+                              </div>
                            </div>
-                           <div>
-                              <h4 className="text-sm font-black text-white">{post.author.name}</h4>
-                              <p className="text-[10px] text-slate-500 uppercase font-black">{post.type}</p>
-                           </div>
+                           {(post.authorId === session?.user?.id || post.author.name === session?.user?.name) && (
+                              <button 
+                                onClick={() => { setEditingPost(post); setShowPulseModal(true); }}
+                                className="text-xs font-bold text-orange-400 hover:underline"
+                              >
+                                {t('edit')}
+                              </button>
+                           )}
                         </div>
                         <p className="text-sm text-slate-300 italic font-medium">"{post.content}"</p>
                         {post.imageUrl && (
@@ -381,6 +392,7 @@ export default function MarketerDashboard() {
         onClose={() => setShowPulseModal(false)} 
         onSuccess={fetchFeed} 
         userRole="MARKETER"
+        editPost={editingPost}
       />
 
       <AnimatePresence>

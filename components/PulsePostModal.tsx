@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, Send, ImageIcon, Plus, 
@@ -13,11 +13,12 @@ interface PulsePostModalProps {
   onClose: () => void;
   onSuccess: () => void;
   userRole: string;
+  editPost?: any;
 }
 
 const CATEGORIES = ["SEO", "SMM", "Ads", "Design", "Strategy", "Content"];
 
-export default function PulsePostModal({ isOpen, onClose, onSuccess, userRole }: PulsePostModalProps) {
+export default function PulsePostModal({ isOpen, onClose, onSuccess, userRole, editPost }: PulsePostModalProps) {
   const { t } = useLanguage();
   const [content, setContent] = useState("");
   const [image, setImage] = useState<string | null>(null);
@@ -25,6 +26,15 @@ export default function PulsePostModal({ isOpen, onClose, onSuccess, userRole }:
   const [category, setCategory] = useState("SEO");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setContent(editPost?.content || "");
+      setImage(editPost?.imageUrl || null);
+      setType(editPost?.type || (userRole === 'MARKETER' ? 'PORTFOLIO' : 'INQUIRY'));
+      setCategory(editPost?.category || "SEO");
+    }
+  }, [isOpen, editPost, userRole]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,8 +55,10 @@ export default function PulsePostModal({ isOpen, onClose, onSuccess, userRole }:
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/posts", {
-        method: "POST",
+      const url = editPost ? `/api/posts/${editPost.id}` : "/api/posts";
+      const method = editPost ? "PUT" : "POST";
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content, imageUrl: image, type, category }),
       });
@@ -83,7 +95,7 @@ export default function PulsePostModal({ isOpen, onClose, onSuccess, userRole }:
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-10">
                 <div className="space-y-2">
-                  <h3 className="text-3xl font-black text-white leading-tight">{t('broadcastPulse')}</h3>
+                  <h3 className="text-3xl font-black text-white leading-tight">{editPost ? "تعديل المنشور" : t('broadcastPulse')}</h3>
                   <p className="text-slate-400 font-medium italic">النشر في شبكة الخبراء الاستراتيجية.</p>
                 </div>
                 <button onClick={onClose} className="p-3 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white transition-colors">

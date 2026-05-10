@@ -24,6 +24,7 @@ export default function ClientDashboard() {
   const [tasks, setTasks] = useState<any[]>([]);
   const [feedPosts, setFeedPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editingPost, setEditingPost] = useState<any>(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -139,7 +140,7 @@ export default function ClientDashboard() {
             </div>
             <div className="flex gap-4">
               <button 
-                onClick={() => setShowPulseModal(true)}
+                onClick={() => { setEditingPost(null); setShowPulseModal(true); }}
                 className="px-6 py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-white hover:bg-white/10 transition-all flex items-center gap-3">
                  <Share2 className="w-5 h-5 text-secondary" /> {t('shareInsight')}
               </button>
@@ -235,14 +236,24 @@ export default function ClientDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                  {feedPosts.map((post) => (
                     <div key={post.id} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/5 flex flex-col gap-6 group overflow-x-hidden relative">
-                       <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center font-black text-secondary">
-                             {post.author.name.charAt(0)}
-                          </div>
-                          <div>
-                             <h4 className="text-sm font-black text-white">{post.author.name}</h4>
-                             <p className="text-[10px] text-slate-500 uppercase font-black">{post.type}</p>
-                          </div>
+                       <div className="flex items-center justify-between">
+                           <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center font-black text-secondary">
+                                 {post.author.name.charAt(0)}
+                              </div>
+                              <div>
+                                 <h4 className="text-sm font-black text-white">{post.author.name}</h4>
+                                 <p className="text-[10px] text-slate-500 uppercase font-black">{post.type}</p>
+                              </div>
+                           </div>
+                           {(post.authorId === session?.user?.id || post.author.name === session?.user?.name) && (
+                              <button 
+                                onClick={() => { setEditingPost(post); setShowPulseModal(true); }}
+                                className="text-xs font-bold text-secondary hover:underline"
+                              >
+                                {t('edit')}
+                              </button>
+                           )}
                        </div>
                        <p className="text-sm text-slate-300 italic font-medium">"{post.content}"</p>
                        {post.imageUrl && (
@@ -293,6 +304,7 @@ export default function ClientDashboard() {
         onClose={() => setShowPulseModal(false)} 
         onSuccess={fetchFeed} 
         userRole="CLIENT"
+        editPost={editingPost}
       />
 
       {/* Post Task Modal */}
