@@ -46,7 +46,7 @@ export default function NotificationDropdown() {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="absolute top-16 right-0 w-80 bg-slate-900/90 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-3xl z-[70] overflow-hidden"
+              className="fixed left-4 right-4 top-20 sm:absolute sm:inset-auto sm:top-16 sm:left-0 sm:w-80 bg-slate-900/90 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-3xl z-[70] overflow-hidden"
             >
               <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5 flex-row-reverse">
                 <span className="text-xs font-black uppercase tracking-widest text-white">إشعارات النظام</span>
