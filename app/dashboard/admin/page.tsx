@@ -403,27 +403,7 @@ export default function AdminDashboard() {
                 <Bell className="w-5 h-5" />
                 {notifications.some(n => n.unread) && <span className="absolute top-2 right-2.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>}
               </button>
-              <AnimatePresence>
-                {showNotifications && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="fixed left-1/2 -translate-x-1/2 top-24 w-[90vw] max-w-[350px] md:absolute md:translate-x-0 md:left-0 md:top-full md:mt-2 md:w-80 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-[100] overflow-hidden text-right">
-                    <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
-                      <span className="font-bold text-white">الإشعارات</span>
-                      <button onClick={() => setNotifications(notifications.map(n => ({...n, unread: false})))} className="text-xs text-secondary hover:underline">تحديد كـ مقروء</button>
-                    </div>
-                    <div className="max-h-80 overflow-y-auto">
-                      {notifications.map(n => (
-                        <div key={n.id} className={`p-4 border-b border-white/5 text-sm ${n.unread ? 'bg-slate-800/50' : ''} hover:bg-white/5 transition-colors cursor-pointer flex gap-3`}>
-                          <div className={`w-2 h-2 mt-1.5 rounded-full shrink-0 ${n.unread ? 'bg-secondary' : 'bg-transparent'}`}></div>
-                          <div>
-                             <div className="font-bold text-slate-200">{n.text}</div>
-                             <div className="text-xs text-slate-500 mt-1">{n.time}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+
             </div>
             <button onClick={handleExportCSV} className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-secondary text-white font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-secondary/20">
               <Download className="w-4 h-4" /> تصدير CSV
@@ -920,6 +900,47 @@ export default function AdminDashboard() {
               </form>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Notifications Root Overlay */}
+      <AnimatePresence>
+        {showNotifications && (
+          <>
+            {/* Mobile/Desktop Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+              onClick={() => setShowNotifications(false)}
+              className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm"
+            />
+            
+            {/* Notifications Modal / Dropdown */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.95, y: 20 }} 
+              className="fixed z-[101] left-1/2 -translate-x-1/2 top-24 w-[90vw] max-w-[400px] md:top-24 md:left-24 md:-translate-x-0 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden text-right"
+            >
+              <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
+                <span className="font-bold text-white text-lg">الإشعارات</span>
+                <div className="flex gap-4">
+                  <button onClick={() => setNotifications(notifications.map(n => ({...n, unread: false})))} className="text-xs text-secondary hover:underline">تحديد كـ مقروء</button>
+                  <button onClick={() => setShowNotifications(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
+                </div>
+              </div>
+              <div className="max-h-[60vh] overflow-y-auto">
+                {notifications.map(n => (
+                  <div key={n.id} className={`p-4 border-b border-white/5 text-sm ${n.unread ? 'bg-slate-800/50' : ''} hover:bg-white/5 transition-colors cursor-pointer flex gap-3`}>
+                    <div className={`w-2 h-2 mt-1.5 rounded-full shrink-0 ${n.unread ? 'bg-secondary' : 'bg-transparent'}`}></div>
+                    <div>
+                       <div className="font-bold text-slate-200">{n.text}</div>
+                       <div className="text-xs text-slate-500 mt-1">{n.time}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
