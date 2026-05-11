@@ -405,7 +405,7 @@ export default function AdminDashboard() {
               </button>
               <AnimatePresence>
                 {showNotifications && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="absolute top-full left-0 mt-2 w-[85vw] max-w-[320px] sm:w-80 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-[60] overflow-hidden text-right">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="fixed left-1/2 -translate-x-1/2 top-24 w-[90vw] max-w-[350px] md:absolute md:translate-x-0 md:left-0 md:top-full md:mt-2 md:w-80 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-[100] overflow-hidden text-right">
                     <div className="p-4 border-b border-white/10 flex justify-between items-center bg-slate-800/50">
                       <span className="font-bold text-white">الإشعارات</span>
                       <button onClick={() => setNotifications(notifications.map(n => ({...n, unread: false})))} className="text-xs text-secondary hover:underline">تحديد كـ مقروء</button>
