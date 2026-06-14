@@ -31,32 +31,56 @@ export default function MarketerTicker() {
     <div className="w-full py-4 bg-[#0b0f1a] border-y border-white/5 flex overflow-hidden whitespace-nowrap relative z-10">
       
       {/* Edge Fades */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0b0f1a] to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[#0b0f1a] to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0b0f1a] to-transparent z-20 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[#0b0f1a] to-transparent z-20 pointer-events-none"></div>
       
-      <motion.div
-        animate={{ x: ["0%", "-33.33%"] }} 
-        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-        className="flex shrink-0 gap-10 items-center px-4 will-change-transform"
-        dir="ltr"
-      >
-        {/* Triplicating array for smooth infinite scrolling */}
-        {[...marketers, ...marketers, ...marketers].map((m, i) => (
-          <div key={i} className="flex items-center gap-2 shrink-0">
-             <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center shadow-inner relative overflow-hidden">
-                <Star className="w-4 h-4 text-accent fill-accent" />
+      <div className="flex w-max" dir="ltr">
+        {/* Track 1 */}
+        <motion.div
+          animate={{ x: ["0%", "-100%"] }} 
+          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+          className="flex gap-10 items-center pr-10 shrink-0 will-change-transform"
+        >
+          {marketers.map((m, i) => (
+             <div key={i} className="flex items-center gap-2 shrink-0">
+                <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center shadow-inner relative overflow-hidden">
+                   <Star className="w-4 h-4 text-accent fill-accent" />
+                </div>
+                <div className="flex flex-col">
+                   <span className="text-white font-black text-xs tracking-wide">
+                      {m.name} <span className="text-secondary/70 text-[10px] ml-1">({m.spec})</span>
+                   </span>
+                   <span className="text-slate-500 text-[8px] font-black uppercase tracking-widest mt-0.5">
+                      {m.tasks} {t('tasksCompleted')}
+                   </span>
+                </div>
              </div>
-             <div className="flex flex-col">
-                <span className="text-white font-black text-xs tracking-wide">
-                   {m.name} <span className="text-secondary/70 text-[10px] ml-1">({m.spec})</span>
-                </span>
-                <span className="text-slate-500 text-[8px] font-black uppercase tracking-widest mt-0.5">
-                   {m.tasks} {t('tasksCompleted')}
-                </span>
+          ))}
+        </motion.div>
+
+        {/* Track 2 (Identical for seamless looping) */}
+        <motion.div
+          animate={{ x: ["0%", "-100%"] }} 
+          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+          className="flex gap-10 items-center pr-10 shrink-0 will-change-transform"
+        >
+          {marketers.map((m, i) => (
+             <div key={i} className="flex items-center gap-2 shrink-0">
+                <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center shadow-inner relative overflow-hidden">
+                   <Star className="w-4 h-4 text-accent fill-accent" />
+                </div>
+                <div className="flex flex-col">
+                   <span className="text-white font-black text-xs tracking-wide">
+                      {m.name} <span className="text-secondary/70 text-[10px] ml-1">({m.spec})</span>
+                   </span>
+                   <span className="text-slate-500 text-[8px] font-black uppercase tracking-widest mt-0.5">
+                      {m.tasks} {t('tasksCompleted')}
+                   </span>
+                </div>
              </div>
-          </div>
-        ))}
-      </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 }
