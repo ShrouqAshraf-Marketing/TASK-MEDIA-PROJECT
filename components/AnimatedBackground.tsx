@@ -67,13 +67,13 @@ export default function AnimatedBackground() {
                   repeat: Infinity,
                   ease: "easeInOut",
                   delay: item.delay
-              }}
+               }}
               style={{
                   position: "absolute",
                   left: item.x,
                   top: item.y
               }}
-              className="text-white/40 blur-[0.5px] pointer-events-none hidden md:block"
+              className="text-white/40 blur-[0.5px] pointer-events-none"
           >
               <item.Icon size={randomSize} strokeWidth={1.5} />
           </motion.div>

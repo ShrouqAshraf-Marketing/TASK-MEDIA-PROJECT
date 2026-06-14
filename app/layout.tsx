@@ -13,6 +13,11 @@ import FloatingNav from "@/components/FloatingNav";
 export const metadata: Metadata = {
   title: "تاسك ميديا | مستقبل التسويق الاستراتيجي",
   description: "البيئة الرائدة لنخبة المواهب التسويقية. تعاقد مع محترفين لتوسيع نطاق أعمالك.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  }
 };
 
 export default function RootLayout({

@@ -15,6 +15,16 @@ export default function MarketerTicker() {
     { name: "Kareem S.", spec: t('specMedia'), tasks: "2.1k" },
     { name: "Layla F.", spec: t('specDesign'), tasks: "1.1k" },
     { name: "Omar Z.", spec: t('specWeb'), tasks: "1.3k" },
+    { name: "Fatima A.", spec: t('specDesign'), tasks: "880" },
+    { name: "Mahmoud K.", spec: t('specWebDev'), tasks: "1.7k" },
+    { name: "Mariam O.", spec: t('specAds'), tasks: "1.1k" },
+    { name: "Hassan B.", spec: t('specSeo'), tasks: "1.4k" },
+    { name: "Hoda E.", spec: t('specContent'), tasks: "920" },
+    { name: "Tariq J.", spec: t('specMedia'), tasks: "1.9k" },
+    { name: "Dina M.", spec: t('specSocial'), tasks: "1.6k" },
+    { name: "Ziad N.", spec: t('specWeb'), tasks: "750" },
+    { name: "Rania A.", spec: t('specDesign'), tasks: "1.2k" },
+    { name: "Mostafa G.", spec: t('specWebDev'), tasks: "2.3k" },
   ];
 
   return (
@@ -26,7 +36,7 @@ export default function MarketerTicker() {
       
       <motion.div
         animate={{ x: ["0%", "-33.33%"] }} 
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
         className="flex shrink-0 gap-10 items-center px-4 will-change-transform"
         dir="ltr"
       >

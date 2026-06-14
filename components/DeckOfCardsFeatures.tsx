@@ -68,7 +68,7 @@ export default function DeckOfCardsFeatures() {
     }
   ];
 
-  /* Absolute Playing Card Fan Math (6 Cards) across 1200px width */
+  /* Playing Card Fan Math for both Desktop and Mobile */
   const desktopSpread = [
     { x: -500, y: 70, rotate: -18 },
     { x: -300, y: 25, rotate: -10 },
@@ -76,6 +76,15 @@ export default function DeckOfCardsFeatures() {
     { x: 100,  y: 0,  rotate: 3 },
     { x: 300,  y: 25, rotate: 10 },
     { x: 500,  y: 70, rotate: 18 }
+  ];
+
+  const mobileSpread = [
+    { x: -60, y: 35, rotate: -12 },
+    { x: -35, y: 15, rotate: -7 },
+    { x: -12, y: 3,  rotate: -2 },
+    { x: 12,  y: 3,  rotate: 2 },
+    { x: 35,  y: 15, rotate: 7 },
+    { x: 60,  y: 35, rotate: 12 }
   ];
 
   const handleCardClick = (serviceId: string) => {
@@ -86,7 +95,7 @@ export default function DeckOfCardsFeatures() {
     <div className="relative w-full pb-16 lg:pb-32 flex flex-col items-center justify-center min-h-auto lg:min-h-[550px]" ref={ref}>
        
        {/* Cards Deck Area */}
-       <div className="relative w-full max-w-[1200px] mx-auto flex flex-col lg:block items-center justify-center pt-10 gap-6 lg:gap-0 lg:h-[400px]">
+       <div className="relative w-full max-w-[1200px] mx-auto block pt-10 h-[380px] lg:h-[400px]">
           {services.map((svc, i) => (
              <motion.div
                key={i}
@@ -100,16 +109,16 @@ export default function DeckOfCardsFeatures() {
                }}
                animate={isInView ? {
                   opacity: 1,
-                  x: isMounted && !isMobile ? desktopSpread[i].x : 0,
-                  y: isMounted && !isMobile ? desktopSpread[i].y : 0,
-                  rotate: isMounted && !isMobile ? desktopSpread[i].rotate : 0,
+                  x: isMounted ? (isMobile ? mobileSpread[i].x : desktopSpread[i].x) : 0,
+                  y: isMounted ? (isMobile ? mobileSpread[i].y : desktopSpread[i].y) : 0,
+                  rotate: isMounted ? (isMobile ? mobileSpread[i].rotate : desktopSpread[i].rotate) : 0,
                   scale: 1,
                   zIndex: i
                } : {}}
                whileHover={{ 
                   scale: 1.05, 
-                  y: isMounted && !isMobile ? desktopSpread[i].y - 40 : -10,
-                  rotate: isMounted && !isMobile ? desktopSpread[i].rotate / 2 : 0,
+                  y: isMounted ? (isMobile ? mobileSpread[i].y - 20 : desktopSpread[i].y - 40) : -10,
+                  rotate: isMounted ? (isMobile ? mobileSpread[i].rotate / 2 : desktopSpread[i].rotate / 2) : 0,
                   zIndex: 50 
                }}
                transition={{ 
@@ -119,7 +128,7 @@ export default function DeckOfCardsFeatures() {
                   delay: i * 0.1 
                }}
                onClick={() => handleCardClick(svc.id)}
-               className="relative lg:absolute lg:left-1/2 lg:-ml-[140px] w-full max-w-[320px] lg:max-w-none lg:w-[280px] h-fit min-h-[300px] bg-[#0b0f1a] border-2 border-white/5 rounded-[2rem] p-8 shadow-xl flex flex-col justify-between cursor-pointer group hover:border-accent/40"
+               className="absolute left-1/2 -ml-[120px] lg:-ml-[140px] w-[240px] lg:w-[280px] h-fit min-h-[300px] bg-[#0b0f1a] border-2 border-white/5 rounded-[2rem] p-8 shadow-xl flex flex-col justify-between cursor-pointer group hover:border-accent/40"
                style={{
                   boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)"
                }}
