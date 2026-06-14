@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   title: "تاسك ميديا | مستقبل التسويق الاستراتيجي",
   description: "البيئة الرائدة لنخبة المواهب التسويقية. تعاقد مع محترفين لتوسيع نطاق أعمالك.",
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
   }
 };
 
