@@ -14,6 +14,7 @@ export default function DeckOfCardsFeatures() {
   
   const [isMobile, setIsMobile] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -88,14 +89,20 @@ export default function DeckOfCardsFeatures() {
   ];
 
   const handleCardClick = (serviceId: string) => {
+    if (isMobile && !isExpanded) {
+      setIsExpanded(true);
+      return;
+    }
     router.push(`/marketers?service=${serviceId}`);
   };
+
+  const containerHeight = isMobile && isExpanded ? "h-[1960px]" : "h-[380px] lg:h-[400px]";
 
   return (
     <div className="relative w-full pb-16 lg:pb-32 flex flex-col items-center justify-center min-h-auto lg:min-h-[550px]" ref={ref}>
        
        {/* Cards Deck Area */}
-       <div className="relative w-full max-w-[1200px] mx-auto block pt-10 h-[380px] lg:h-[400px]">
+       <div className={`relative w-full max-w-[1200px] mx-auto block pt-10 transition-all duration-500 ${containerHeight}`}>
           {services.map((svc, i) => (
              <motion.div
                key={i}
@@ -109,16 +116,24 @@ export default function DeckOfCardsFeatures() {
                }}
                animate={isInView ? {
                   opacity: 1,
-                  x: isMounted ? (isMobile ? mobileSpread[i].x : desktopSpread[i].x) : 0,
-                  y: isMounted ? (isMobile ? mobileSpread[i].y : desktopSpread[i].y) : 0,
-                  rotate: isMounted ? (isMobile ? mobileSpread[i].rotate : desktopSpread[i].rotate) : 0,
+                  x: isMounted ? (isMobile ? (isExpanded ? 0 : mobileSpread[i].x) : desktopSpread[i].x) : 0,
+                  y: isMounted ? (isMobile ? (isExpanded ? i * 320 : mobileSpread[i].y) : desktopSpread[i].y) : 0,
+                  rotate: isMounted ? (isMobile ? (isExpanded ? 0 : mobileSpread[i].rotate) : desktopSpread[i].rotate) : 0,
                   scale: 1,
-                  zIndex: i
+                  zIndex: isExpanded ? i + 10 : i
                } : {}}
                whileHover={{ 
                   scale: 1.05, 
-                  y: isMounted ? (isMobile ? mobileSpread[i].y - 20 : desktopSpread[i].y - 40) : -10,
-                  rotate: isMounted ? (isMobile ? mobileSpread[i].rotate / 2 : desktopSpread[i].rotate / 2) : 0,
+                  y: isMounted 
+                     ? (isMobile 
+                        ? (isExpanded ? i * 320 - 10 : mobileSpread[i].y - 20) 
+                        : desktopSpread[i].y - 40) 
+                     : -10,
+                  rotate: isMounted 
+                     ? (isMobile 
+                        ? (isExpanded ? 0 : mobileSpread[i].rotate / 2) 
+                        : desktopSpread[i].rotate / 2) 
+                     : 0,
                   zIndex: 50 
                }}
                transition={{ 
@@ -151,6 +166,24 @@ export default function DeckOfCardsFeatures() {
              </motion.div>
           ))}
        </div>
+
+       {isMobile && !isExpanded && (
+          <div className="text-center mt-6 text-slate-400 text-xs font-semibold animate-pulse cursor-pointer" onClick={() => setIsExpanded(true)}>
+             انقري على الكروت لعرض كافة الخدمات
+          </div>
+       )}
+
+       {isMobile && isExpanded && (
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsExpanded(false);
+            }}
+            className="mt-6 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 transition-colors z-20"
+          >
+             ضم الكروت (إغلاق)
+          </button>
+       )}
     </div>
   );
 }
