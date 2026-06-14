@@ -32,12 +32,28 @@ export default function MarketerTicker() {
 
   return (
     <div className="w-full py-4 bg-[#0b0f1a] border-y border-white/5 overflow-hidden whitespace-nowrap relative z-10">
+      <style>{`
+        @keyframes marqueeCustom {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(-25%, 0, 0);
+          }
+        }
+        .animate-marquee-custom {
+          display: flex;
+          width: max-content;
+          will-change: transform;
+          animation: marqueeCustom 40s linear infinite;
+        }
+      `}</style>
       
       {/* Edge Fades */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0b0f1a] to-transparent z-20 pointer-events-none"></div>
       <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[#0b0f1a] to-transparent z-20 pointer-events-none"></div>
       
-      <div className="flex w-max will-change-transform animate-marquee" dir="ltr">
+      <div className="animate-marquee-custom" dir="ltr">
         {repeatedMarketers.map((m, i) => (
            <div key={i} className="flex items-center gap-2 shrink-0 mx-5">
               <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center shadow-inner relative overflow-hidden">
