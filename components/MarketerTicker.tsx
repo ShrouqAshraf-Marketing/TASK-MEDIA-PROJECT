@@ -27,8 +27,8 @@ export default function MarketerTicker() {
     { name: "Mostafa G.", spec: t('specWebDev'), tasks: "2.3k" },
   ];
 
-  // Quadruple the array to guarantee it is wider than any screen and loops seamlessly
-  const repeatedMarketers = [...marketers, ...marketers, ...marketers, ...marketers];
+  // Double the array to guarantee it is wider than the screen and fits safely under GPU limits
+  const repeatedMarketers = [...marketers, ...marketers];
 
   return (
     <div className="w-full py-4 bg-[#0b0f1a] border-y border-white/5 overflow-hidden whitespace-nowrap relative z-10" dir="ltr">
@@ -38,7 +38,7 @@ export default function MarketerTicker() {
             transform: translate3d(0, 0, 0);
           }
           100% {
-            transform: translate3d(-25%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
           }
         }
         .animate-marquee-custom {
