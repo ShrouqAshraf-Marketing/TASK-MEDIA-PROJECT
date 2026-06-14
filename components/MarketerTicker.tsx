@@ -31,7 +31,7 @@ export default function MarketerTicker() {
   const repeatedMarketers = [...marketers, ...marketers, ...marketers, ...marketers];
 
   return (
-    <div className="w-full py-4 bg-[#0b0f1a] border-y border-white/5 overflow-hidden whitespace-nowrap relative z-10">
+    <div className="w-full py-4 bg-[#0b0f1a] border-y border-white/5 overflow-hidden whitespace-nowrap relative z-10" dir="ltr">
       <style>{`
         @keyframes marqueeCustom {
           0% {
