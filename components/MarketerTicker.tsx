@@ -36,11 +36,7 @@ export default function MarketerTicker() {
       
       <div className="flex w-max" dir="ltr">
         {/* Track 1 */}
-        <motion.div
-          animate={{ x: ["0%", "-100%"] }} 
-          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-          className="flex gap-10 items-center pr-10 shrink-0 will-change-transform"
-        >
+        <div className="flex gap-10 items-center pr-10 shrink-0 will-change-transform animate-marquee">
           {marketers.map((m, i) => (
              <div key={i} className="flex items-center gap-2 shrink-0">
                 <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center shadow-inner relative overflow-hidden">
@@ -56,14 +52,10 @@ export default function MarketerTicker() {
                 </div>
              </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Track 2 (Identical for seamless looping) */}
-        <motion.div
-          animate={{ x: ["0%", "-100%"] }} 
-          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-          className="flex gap-10 items-center pr-10 shrink-0 will-change-transform"
-        >
+        <div className="flex gap-10 items-center pr-10 shrink-0 will-change-transform animate-marquee">
           {marketers.map((m, i) => (
              <div key={i} className="flex items-center gap-2 shrink-0">
                 <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center shadow-inner relative overflow-hidden">
@@ -79,7 +71,7 @@ export default function MarketerTicker() {
                 </div>
              </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );
