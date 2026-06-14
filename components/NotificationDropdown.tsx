@@ -68,8 +68,8 @@ export default function NotificationDropdown() {
                           {n.type === 'mission' ? <Target className="w-4 h-4" /> : n.type === 'payment' ? <DollarSign className="w-4 h-4" /> : <Info className="w-4 h-4" />}
                         </div>
                         <div className="min-w-0 text-right w-full">
-                          <h5 className="text-xs font-bold text-white mb-0.5 truncate">{n.title}</h5>
-                          <p className="text-[11px] text-slate-400 leading-tight mb-1 line-clamp-2">{n.body}</p>
+                          <h5 className="text-xs font-bold text-white mb-0.5">{n.title}</h5>
+                          <p className="text-[11px] text-slate-400 leading-tight mb-1">{n.body}</p>
                           <span className="text-[9px] font-black uppercase text-slate-600 tracking-tighter">{n.time}</span>
                         </div>
                       </div>
